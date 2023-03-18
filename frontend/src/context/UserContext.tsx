@@ -1,16 +1,17 @@
-import { createContext, PropsWithChildren, useState } from "react";
+import { createContext, PropsWithChildren, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+// types
+import { UserContextType, ViewContextType, View } from "../shared/types";
+import ViewContext from "./ViewContext";
+
 // TODO replace User state with reducer
-export interface UserContextType {
-    isAuthenticated: boolean;
-    user: any; // TODO type properly when db integration
-    authLogin: (authUser: any) => void;
-}
 
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = (props: PropsWithChildren) => {
+    const { changeView } = useContext(ViewContext) as ViewContextType;
+
     // TODO potentially replace User state with reducer
 
     // TODO SETUP persistence with authentication
@@ -30,6 +31,8 @@ export const UserProvider = (props: PropsWithChildren) => {
             }
         } catch (errror) {}
         setIsAuthenticated(true);
+        // TODO change view based on user type
+        changeView(View.Admin);
     };
 
     const value = { isAuthenticated, user, authLogin };

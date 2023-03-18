@@ -1,10 +1,7 @@
 import { createContext, PropsWithChildren, useState } from "react";
 
-export interface NavContainerContextType {
-    sideBarOpen: boolean;
-    handleSideBarOpen: () => void;
-    handleSideBarClose: () => void;
-}
+//types
+import { NavContainerContextType } from "../shared/types";
 
 const NavContainerContext = createContext<NavContainerContextType | null>(null);
 

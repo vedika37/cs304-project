@@ -15,11 +15,11 @@ import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import { drawerWidth } from "../layouts/MainLayout";
-import NavContainerContext, {
-    NavContainerContextType,
-} from "../context/NavContainerContext";
+import NavContainerContext from "../context/NavContainerContext";
+import { NavContainerContextType } from "../shared/types";
 import { Link, useNavigate } from "react-router-dom";
-import UserContext, { UserContextType } from "../context/UserContext";
+import UserContext from "../context/UserContext";
+import { UserContextType } from "../shared/types";
 
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
 import HealingIcon from "@mui/icons-material/Healing";

@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useContext } from "react";
 
-import UserContext, { UserContextType } from "../context/UserContext";
+import UserContext from "../context/UserContext";
+import { UserContextType } from "../shared/types";
 
 const Container = styled("div")({
     textAlign: "center",

@@ -4,11 +4,11 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { useContext } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { drawerWidth } from "../layouts/MainLayout";
-import NavContainerContext, {
-    NavContainerContextType,
-} from "../context/NavContainerContext";
+import NavContainerContext from "../context/NavContainerContext";
+import { NavContainerContextType } from "../shared/types";
 import AccountWidgets from "./AccountWidgets";
-import UserContext, { UserContextType } from "../context/UserContext";
+import UserContext from "../context/UserContext";
+import { UserContextType } from "../shared/types";
 import { useNavigate } from "react-router-dom";
 
 interface AppBarProps extends MuiAppBarProps {
