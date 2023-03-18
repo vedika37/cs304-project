@@ -1,23 +1,38 @@
 import { createContext, PropsWithChildren, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // TODO replace User state with reducer
 export interface UserContextType {
     isAuthenticated: boolean;
-    fakeAuth: () => void;
+    user: any; // TODO type properly when db integration
+    authLogin: (authUser: any) => void;
 }
 
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = (props: PropsWithChildren) => {
-    // TODO replace User state with reducer
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // TODO potentially replace User state with reducer
 
-    // fake user auth for testing
-    const fakeAuth = () => {
-        setIsAuthenticated(!isAuthenticated);
+    // TODO SETUP persistence with authentication
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState();
+
+    const navigate = useNavigate();
+
+    const authLogin = (authUser: any) => {
+        console.log("Logged in as:", authUser); // TODO remove
+        try {
+            setUser(authUser);
+            try {
+                navigate(-1);
+            } catch (e) {
+                navigate("/");
+            }
+        } catch (errror) {}
+        setIsAuthenticated(true);
     };
 
-    const value = { isAuthenticated, fakeAuth };
+    const value = { isAuthenticated, user, authLogin };
     return (
         <UserContext.Provider value={value}>
             {props.children}

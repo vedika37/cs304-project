@@ -1,8 +1,12 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
+import InjuryInfoPage from "./pages/InjuryInfoPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import Page404 from "./pages/Page404";
+import PersonalInfoPage from "./pages/PersonalInfoPage";
+import ScheduleInfoPage from "./pages/ScheduleInfoPage";
+import TeamInfoPage from "./pages/TeamInfoPage";
 
 export default function AppRouter() {
     const routes = useRoutes([
@@ -15,8 +19,20 @@ export default function AppRouter() {
                     element: <MainPage />,
                 },
                 {
-                    path: "f",
-                    element: <div>test</div>,
+                    path: "personal-info",
+                    element: <PersonalInfoPage />,
+                },
+                {
+                    path: "injury-info",
+                    element: <InjuryInfoPage />,
+                },
+                {
+                    path: "team-info",
+                    element: <TeamInfoPage />,
+                },
+                {
+                    path: "schedule-info",
+                    element: <ScheduleInfoPage />,
                 },
             ],
         },

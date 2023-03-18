@@ -1,7 +1,7 @@
 import { Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { drawerWidth } from "../layouts/MainLayout";
 import NavContainerContext, {
@@ -10,7 +10,6 @@ import NavContainerContext, {
 import AccountWidgets from "./AccountWidgets";
 import UserContext, { UserContextType } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import yellow from "@mui/material/colors/yellow";
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -37,20 +36,8 @@ const AppBar = styled(MuiAppBar, {
 
 // ///////////////////////// MUI appbar template styling /////
 
-// CLEANUP after this is no longer needed
-const FakeAuthButton = styled("button")({
-    width: "100px",
-    height: "30px",
-    position: "absolute",
-    right: 0,
-    bottom: 0,
-    transform: "translate(0,100%)",
-});
-
 const NavBar = () => {
-    const { isAuthenticated, fakeAuth } = useContext(
-        UserContext
-    ) as UserContextType;
+    const { isAuthenticated } = useContext(UserContext) as UserContextType;
 
     const { sideBarOpen, handleSideBarOpen } = useContext(
         NavContainerContext
@@ -74,9 +61,13 @@ const NavBar = () => {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
-                    <div className="app-title">
+                    <Button
+                        variant="contained"
+                        className="app-title"
+                        onClick={() => navigate("/")}
+                    >
                         Sports Organization Management Tool
-                    </div>
+                    </Button>
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
                 {isAuthenticated && <AccountWidgets />}
@@ -86,7 +77,6 @@ const NavBar = () => {
                     </Button>
                 )}
             </Toolbar>
-            <FakeAuthButton onClick={fakeAuth}>setAuth</FakeAuthButton>
         </AppBar>
     );
 };
