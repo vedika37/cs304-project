@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 // types
-import { UserContextType, ViewContextType, View } from "../shared/types";
+import { UserContextType, ViewContextType, View, User } from "../shared/types";
 import ViewContext from "./ViewContext";
 
 // TODO replace User state with reducer
@@ -16,11 +16,11 @@ export const UserProvider = (props: PropsWithChildren) => {
 
     // TODO SETUP persistence with authentication
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState();
+    const [user, setUser] = useState<User | null>(null);
 
     const navigate = useNavigate();
 
-    const authLogin = (authUser: any) => {
+    const authLogin = (authUser: User) => {
         console.log("Logged in as:", authUser); // TODO remove
         try {
             setUser(authUser);
@@ -29,7 +29,7 @@ export const UserProvider = (props: PropsWithChildren) => {
             } catch (e) {
                 navigate("/");
             }
-        } catch (errror) {}
+        } catch (error) {}
         setIsAuthenticated(true);
         // TODO change view based on user type
         changeView(View.Admin);

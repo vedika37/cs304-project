@@ -16,8 +16,38 @@ export interface ViewContextType {
     changeView: (newView: View) => void;
 }
 
+export const User = {
+    playerID: "",
+    name: "",
+    position: "",
+    playerNumber: 0,
+    phoneNumber: "",
+    rankNumber: 0,
+    rankType: "",
+    teamType: "",
+    teamName: "",
+    division: "",
+    scheduleID: "",
+};
+
+export type User = typeof User;
+
+// export interface User {
+//     playerID: string;
+//     name: string;
+//     position: string;
+//     playerNumber: Number;
+//     phoneNumber: string;
+//     rankNumber: Number;
+//     rankType: string;
+//     teamType: string;
+//     teamName: string;
+//     division: string;
+//     scheduleID: string;
+// }
+
 export interface UserContextType {
     isAuthenticated: boolean;
-    user: any; // TODO type properly when db integration
+    user: User | null;
     authLogin: (authUser: any) => void;
 }

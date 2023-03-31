@@ -19,7 +19,7 @@ const LoginPage = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        const userID = data.get("user");
+        const userID = data.get("user"); //TODO implement api call and make sure returned tpye is user
         authLogin(userID);
     };
 

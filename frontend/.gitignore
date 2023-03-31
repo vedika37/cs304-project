@@ -25,3 +25,6 @@ dist-ssr
 
 # env vars
 .env
+
+# json-server data
+db.json
