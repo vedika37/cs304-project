@@ -3,7 +3,9 @@ import { createContext, PropsWithChildren, useState } from "react";
 //types
 import { NavContainerContextType } from "../shared/types";
 
-const NavContainerContext = createContext<NavContainerContextType | null>(null);
+const NavContainerContext = createContext<NavContainerContextType | null>(
+    {} as NavContainerContextType
+);
 
 export const NavContainerProvider = (props: PropsWithChildren) => {
     const [sideBarOpen, setSideBarOpen] = useState(false);

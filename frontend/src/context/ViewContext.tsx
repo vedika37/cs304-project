@@ -3,7 +3,9 @@ import { createContext, PropsWithChildren, useState } from "react";
 //types
 import { View, ViewContextType } from "../shared/types";
 
-const ViewContext = createContext<ViewContextType | null>(null);
+const ViewContext = createContext<ViewContextType | null>(
+    {} as ViewContextType
+);
 
 export const ViewProvider = (props: PropsWithChildren) => {
     const [view, setView] = useState(View.Guest);

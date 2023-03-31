@@ -1,6 +1,13 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
-import { Player, User, UserContextType, uType } from "../shared/types";
+import {
+    UserContextType,
+    User,
+    Player,
+    ViewContextType,
+    View,
+    PlayerObj,
+} from "../shared/types";
 import {
     Autocomplete,
     Box,
@@ -15,6 +22,7 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
+import ViewContext from "../context/ViewContext";
 
 interface PIProps {
     player: Player;
@@ -27,7 +35,7 @@ const PlayerInfo = ({ player }: PIProps) => {
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 4, sm: 8, md: 12 }}
         >
-            {Object.entries(Player).map(([key, value], i) => {
+            {Object.entries(PlayerObj).map(([key, value], i) => {
                 return (
                     <Grid item xs={2} sm={3} md={3} key={i}>
                         <Card style={{ height: "100%" }}>
@@ -64,9 +72,11 @@ const PlayerInfo = ({ player }: PIProps) => {
 };
 
 const PlayerInfoPage = () => {
-    const { isAuthenticated, user, userType } = useContext(
+    const { isAuthenticated, user } = useContext(
         UserContext
     ) as UserContextType;
+
+    const { view } = useContext(ViewContext) as ViewContextType;
 
     // tmp user for testing
     const tmpPlayer: Player = {
@@ -92,7 +102,7 @@ const PlayerInfoPage = () => {
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
-                {isAuthenticated && userType === uType.Player && (
+                {isAuthenticated && view === View.Player && (
                     <>
                         <Typography variant="h6">MY PROFILE</Typography>
                         <Divider sx={{ mt: 1, mb: 1 }} />
@@ -112,7 +122,7 @@ const PlayerInfoPage = () => {
                         value={selectedPlayer}
                         options={options}
                         getOptionLabel={(option) => option.name}
-                        onChange={(e: any, newValue: User | null) => {
+                        onChange={(e: any, newValue: Player | null) => {
                             // TODO run SELECT query for new value to pull most recent data
                             setSelectedPlayer(newValue);
                         }}

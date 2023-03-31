@@ -8,13 +8,14 @@ import {
     View,
     Player,
     User,
-    uType,
 } from "../shared/types";
 import ViewContext from "./ViewContext";
 
 // TODO replace User state with reducer
 
-const UserContext = createContext<UserContextType | null>(null);
+const UserContext = createContext<UserContextType | null>(
+    {} as UserContextType
+);
 
 export const UserProvider = (props: PropsWithChildren) => {
     const { changeView } = useContext(ViewContext) as ViewContextType;
@@ -24,15 +25,14 @@ export const UserProvider = (props: PropsWithChildren) => {
     // TODO SETUP persistence with authentication
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState<User>(null);
-    const [userType, setUserType] = useState(uType.Guest);
 
     const navigate = useNavigate();
 
     const authLogin = (authUserID: string) => {
         console.log("Logged in as:", authUserID); // TODO remove
         try {
-            setUser(authUserID); // todo actually implement
-            setUserType(uType.Player);
+            // setUser(authUserID); // todo actually implement
+            // setUserType(uType.Player);
             try {
                 navigate(-1);
             } catch (e) {
@@ -44,7 +44,7 @@ export const UserProvider = (props: PropsWithChildren) => {
         // changeView(View.Admin);
     };
 
-    const value = { isAuthenticated, user, userType, authLogin };
+    const value = { isAuthenticated, user, authLogin };
     return (
         <UserContext.Provider value={value}>
             {props.children}

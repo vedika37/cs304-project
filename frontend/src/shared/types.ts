@@ -12,19 +12,12 @@ export enum View {
     Coach,
 }
 
-export enum uType {
-    Guest = -1,
-    Admin = 0,
-    Player,
-    Coach,
-}
-
 export interface ViewContextType {
     view: View;
     changeView: (newView: View) => void;
 }
 
-export const Player = {
+export const PlayerObj = {
     playerID: "",
     name: "",
     position: "",
@@ -38,7 +31,21 @@ export const Player = {
     scheduleID: "",
 };
 
-export type Player = typeof Player | null;
+export type Player = typeof PlayerObj | null;
+
+// export type Player = {
+//     playerID: string;
+//     name: string;
+//     position: string;
+//     playerNumber: Number;
+//     phoneNumber: string;
+//     rankNumber: Number;
+//     rankType: string;
+//     teamType: string;
+//     teamName: string;
+//     division: string;
+//     scheduleID: string;
+// } | null;
 
 export type User = Player;
 
@@ -59,6 +66,5 @@ export type User = Player;
 export interface UserContextType {
     isAuthenticated: boolean;
     user: User;
-    userType: uType;
-    authLogin: (authUser: any) => void;
+    authLogin: (authUserID: string) => void;
 }
