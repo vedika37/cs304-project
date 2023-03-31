@@ -88,16 +88,16 @@ const SideBar = () => {
             <List>
                 {/* tabs/links go here */}
                 <ListItem
-                    key="personal-info"
+                    key="player-info"
                     disablePadding
                     sx={{ display: "block" }}
                 >
-                    <ListItemButton onClick={() => navigate("personal-info")}>
+                    <ListItemButton onClick={() => navigate("player-info")}>
                         <ListItemIcon>
                             <SettingsAccessibilityIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary="Personal Profile"
+                            primary="Player Profile"
                             sx={{ opacity: sideBarOpen ? 1 : 0 }}
                         />
                     </ListItemButton>

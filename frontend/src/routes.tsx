@@ -4,7 +4,7 @@ import InjuryInfoPage from "./pages/InjuryInfoPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import Page404 from "./pages/Page404";
-import PersonalInfoPage from "./pages/PersonalInfoPage";
+import PlayerInfoPage from "./pages/PlayerInfoPage";
 import ScheduleInfoPage from "./pages/ScheduleInfoPage";
 import TeamInfoPage from "./pages/TeamInfoPage";
 
@@ -19,8 +19,8 @@ export default function AppRouter() {
                     element: <MainPage />,
                 },
                 {
-                    path: "personal-info",
-                    element: <PersonalInfoPage />,
+                    path: "player-info",
+                    element: <PlayerInfoPage />,
                 },
                 {
                     path: "injury-info",
