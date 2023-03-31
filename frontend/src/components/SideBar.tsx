@@ -69,7 +69,7 @@ const SideBarDrawer = styled(MuiDrawer, {
 // /////////////////// MUI drawer template styling /////
 
 const SideBar = () => {
-    const { user } = useContext(UserContext) as UserContextType;
+    const { user } = useContext(UserContext) as UserContextType; //TODO FIX ERROR
 
     const { sideBarOpen, handleSideBarClose } = useContext(
         NavContainerContext

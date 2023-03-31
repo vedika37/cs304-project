@@ -4,7 +4,15 @@ export interface NavContainerContextType {
     handleSideBarClose: () => void;
 }
 
+// maybe get rid of this
 export enum View {
+    Guest = -1,
+    Admin = 0,
+    Player,
+    Coach,
+}
+
+export enum uType {
     Guest = -1,
     Admin = 0,
     Player,
@@ -16,7 +24,7 @@ export interface ViewContextType {
     changeView: (newView: View) => void;
 }
 
-export const User = {
+export const Player = {
     playerID: "",
     name: "",
     position: "",
@@ -30,7 +38,9 @@ export const User = {
     scheduleID: "",
 };
 
-export type User = typeof User;
+export type Player = typeof Player | null;
+
+export type User = Player;
 
 // export interface User {
 //     playerID: string;
@@ -48,6 +58,7 @@ export type User = typeof User;
 
 export interface UserContextType {
     isAuthenticated: boolean;
-    user: User | null;
+    user: User;
+    userType: uType;
     authLogin: (authUser: any) => void;
 }

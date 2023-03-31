@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
-import { User, UserContextType } from "../shared/types";
+import { Player, User, UserContextType, uType } from "../shared/types";
 import {
     Autocomplete,
     Box,
@@ -16,47 +16,60 @@ import {
     Typography,
 } from "@mui/material";
 
-// // UNUSED
-// const PlayerSelection = ({ options, selectedUser, setSelectedUser }: any) => {
-//     // const handleValueChange = () => {};
+interface PIProps {
+    player: Player;
+}
 
-//     // if (selectedUser) {
-//     //     return (
-//     //         <Autocomplete
-//     //             disablePortal
-//     //             id="combo-box-demo"
-//     //             options={options}
-//     //             defaultValue={selectedUser.name}
-//     //             sx={{ mt: 1, width: 300 }}
-//     //             renderInput={(params) => (
-//     //                 <TextField {...params} label="Player" />
-//     //             )}
-//     //         />
-//     //     );
-//     // }
-
-//     return (
-//         <Autocomplete
-//             disablePortal
-//             id="combo-box-demo"
-//             options={options}
-//             value={selectedUser ? selectedUser.name : null}
-//             onChange={(e: any, newValue: string | null) => {
-//                 setSelectedUser(tmpUser);
-//             }}
-//             sx={{ mt: 1, width: 300 }}
-//             renderInput={(params) => <TextField {...params} label="Player" />}
-//         />
-//     );
-// };
+const PlayerInfo = ({ player }: PIProps) => {
+    return (
+        <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+        >
+            {Object.entries(Player).map(([key, value], i) => {
+                return (
+                    <Grid item xs={2} sm={3} md={3} key={i}>
+                        <Card style={{ height: "100%" }}>
+                            <CardContent>
+                                <Typography
+                                    variant="overline"
+                                    color="text.secondary"
+                                >
+                                    {key}
+                                </Typography>
+                                <Typography variant="h5">
+                                    {player && player[key as keyof User]}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                );
+            })}
+            <Grid item xs={2} sm={3} md={3} textAlign="center">
+                <Button
+                    variant="outlined"
+                    sx={{
+                        height: "90%",
+                        width: "90%",
+                        top: "50%",
+                        transform: "translate(0,-50%)",
+                    }}
+                >
+                    Edit
+                </Button>
+            </Grid>
+        </Grid>
+    );
+};
 
 const PlayerInfoPage = () => {
-    const { isAuthenticated, user } = useContext(
+    const { isAuthenticated, user, userType } = useContext(
         UserContext
     ) as UserContextType;
 
     // tmp user for testing
-    const tmpUser: User = {
+    const tmpPlayer: Player = {
         playerID: "P001",
         name: "John Doe",
         position: "Forward",
@@ -71,72 +84,55 @@ const PlayerInfoPage = () => {
     };
 
     // TODO type this state
-    const [selectedUser, setSelectedUser]: any = useState(null);
+    const [selectedPlayer, setSelectedPlayer] = useState<Player>(null);
 
-    const options = [tmpUser];
+    // intial fetch of options will be from SELECT * on backend
+    const options = [tmpPlayer];
 
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
-                <Autocomplete
-                    disablePortal
-                    id="player-selection"
-                    value={selectedUser}
-                    options={options}
-                    getOptionLabel={(option) => option.name}
-                    onChange={(e: any, newValue: User | null) => {
-                        // TODO figure out a way to extract user obj from new value
-                        setSelectedUser(newValue);
-                    }}
-                    isOptionEqualToValue={(option, value) =>
-                        option.playerID === value.playerID
-                    }
-                    sx={{ mt: 1, width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player" />
-                    )}
-                />
-                {/* <PlayerSelection
-                    options={options}
-                    selectedUser={selectedUser}
-                    setSelectedUser={setSelectedUser}
-                /> */}
+                {isAuthenticated && userType === uType.Player && (
+                    <>
+                        <Typography variant="h6">MY PROFILE</Typography>
+                        <Divider sx={{ mt: 1, mb: 1 }} />
+                        <PlayerInfo player={tmpPlayer} />
+                        <Divider sx={{ mt: 2, mb: 1 }} />
+                    </>
+                )}
+                <Stack direction="row" justifyContent="space-between">
+                    <Box display="flex" alignItems="end">
+                        <Typography variant="h6">
+                            SELECT ANOTHER PLAYER
+                        </Typography>
+                    </Box>
+                    <Autocomplete
+                        disablePortal
+                        id="player-selection"
+                        value={selectedPlayer}
+                        options={options}
+                        getOptionLabel={(option) => option.name}
+                        onChange={(e: any, newValue: User | null) => {
+                            // TODO run SELECT query for new value to pull most recent data
+                            setSelectedPlayer(newValue);
+                        }}
+                        isOptionEqualToValue={(option, value) =>
+                            option.playerID === value.playerID
+                        }
+                        sx={{ mt: 1, width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player" />
+                        )}
+                    />
+                </Stack>
                 <Divider sx={{ mt: 1, mb: 1 }} />
-                <Grid
-                    container
-                    spacing={{ xs: 2, md: 3 }}
-                    columns={{ xs: 4, sm: 8, md: 12 }}
-                >
-                    {Object.entries(User).map(([key, value], i) => {
-                        return (
-                            <Grid item xs={2} sm={3} md={3} key={i}>
-                                <Card style={{ height: "100%" }}>
-                                    <CardContent>
-                                        <Typography
-                                            variant="overline"
-                                            color="text.secondary"
-                                        >
-                                            {key}
-                                        </Typography>
-                                        <Typography variant="h5">
-                                            {selectedUser && selectedUser[key]}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        );
-                    })}
-                    <Button
-                        variant="outlined"
-                        sx={{ m: 2, width: "20%", right: -16, bottom: -8 }}
-                    >
-                        Edit
-                    </Button>
-                </Grid>
-                <Divider sx={{ mt: 4, mb: 1 }} />
+                {/*Selected Player Info*/}
+                <PlayerInfo player={selectedPlayer} />
+
+                <Divider sx={{ mt: 2, mb: 1 }} />
                 {/*Player Table*/}
                 <Grid>
-                    <div>TODO Table</div>
+                    <Typography variant="h6">TODO Table</Typography>
                 </Grid>
             </Box>
         </div>

@@ -37,7 +37,7 @@ const AppBar = styled(MuiAppBar, {
 // ///////////////////////// MUI appbar template styling /////
 
 const NavBar = () => {
-    const { isAuthenticated } = useContext(UserContext) as UserContextType;
+    const { isAuthenticated } = useContext(UserContext) as UserContextType; //TODO FIX ERROR
 
     const { sideBarOpen, handleSideBarOpen } = useContext(
         NavContainerContext
