@@ -25,6 +25,7 @@ import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility
 import HealingIcon from "@mui/icons-material/Healing";
 import EventIcon from "@mui/icons-material/Event";
 import GroupsIcon from "@mui/icons-material/Groups";
+import ScoreboardIcon from "@mui/icons-material/Scoreboard";
 
 // MUI drawer template styling //////////////////////////////
 
@@ -143,6 +144,21 @@ const SideBar = () => {
                         </ListItemIcon>
                         <ListItemText
                             primary="Schedule"
+                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                        />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem
+                    key="game-info"
+                    disablePadding
+                    sx={{ display: "block" }}
+                >
+                    <ListItemButton onClick={() => navigate("game-info")}>
+                        <ListItemIcon>
+                            <ScoreboardIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Game History"
                             sx={{ opacity: sideBarOpen ? 1 : 0 }}
                         />
                     </ListItemButton>

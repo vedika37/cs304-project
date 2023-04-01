@@ -24,15 +24,15 @@ export const UserProvider = (props: PropsWithChildren) => {
 
     // TODO SETUP persistence with authentication
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState<User>(null);
+    const [user, setUser] = useState<User | null>(null);
 
     const navigate = useNavigate();
 
     const authLogin = (authUserID: string) => {
         console.log("Logged in as:", authUserID); // TODO remove
         try {
-            // setUser(authUserID); // todo actually implement
-            // setUserType(uType.Player);
+            setUser(authUserID); // todo actually implement
+            changeView(View.Player);
             try {
                 navigate(-1);
             } catch (e) {

@@ -7,6 +7,7 @@ import Page404 from "./pages/Page404";
 import PlayerInfoPage from "./pages/PlayerInfoPage";
 import ScheduleInfoPage from "./pages/ScheduleInfoPage";
 import TeamInfoPage from "./pages/TeamInfoPage";
+import GameInfoPage from "./pages/GameInfoPage";
 
 export default function AppRouter() {
     const routes = useRoutes([
@@ -33,6 +34,10 @@ export default function AppRouter() {
                 {
                     path: "schedule-info",
                     element: <ScheduleInfoPage />,
+                },
+                {
+                    path: "game-info",
+                    element: <GameInfoPage />,
                 },
             ],
         },

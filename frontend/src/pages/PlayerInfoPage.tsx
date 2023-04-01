@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../context/UserContext";
 import {
     UserContextType,
@@ -25,7 +25,7 @@ import {
 import ViewContext from "../context/ViewContext";
 
 interface PIProps {
-    player: Player;
+    player: Player | null;
 }
 
 const PlayerInfo = ({ player }: PIProps) => {
@@ -47,7 +47,7 @@ const PlayerInfo = ({ player }: PIProps) => {
                                     {key}
                                 </Typography>
                                 <Typography variant="h5">
-                                    {player && player[key as keyof User]}
+                                    {player && player[key as keyof Player]}
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -64,7 +64,7 @@ const PlayerInfo = ({ player }: PIProps) => {
                         transform: "translate(0,-50%)",
                     }}
                 >
-                    Edit
+                    More
                 </Button>
             </Grid>
         </Grid>
@@ -80,24 +80,47 @@ const PlayerInfoPage = () => {
 
     // tmp user for testing
     const tmpPlayer: Player = {
-        playerID: "P001",
-        name: "John Doe",
-        position: "Forward",
-        playerNumber: 7,
-        phoneNumber: "555-1234",
-        rankNumber: 1,
-        rankType: "team",
-        teamType: "Soccer",
-        teamName: "The Lions",
-        division: "Premier League",
-        scheduleID: "S001",
+        playerID: "P999",
+        name: "Test Player",
+        position: "Test",
+        playerNumber: 999,
+        phoneNumber: "999-9999",
+        rankNumber: 9,
+        rankType: "Test",
+        teamType: "Test",
+        teamName: "Test",
+        division: "Test",
+        scheduleID: "Test",
     };
 
-    // TODO type this state
-    const [selectedPlayer, setSelectedPlayer] = useState<Player>(null);
+    const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
-    // intial fetch of options will be from SELECT * on backend
-    const options = [tmpPlayer];
+    const [options, setOptions] = useState<Player[]>([]);
+
+    const fetchOptions = async () => {
+        // TODO actually integrate w server later
+        // intial fetch of options will be from SELECT * on backend
+        // const options = [tmpPlayer];
+        const res = await fetch("http://localhost:3001/players");
+        const data = await res.json();
+        // console.log(data);
+        const sData = data.map((o: any) => {
+            delete o["id"];
+            return o;
+        });
+        // console.log("sanitized", sData);
+        setOptions(sData);
+    };
+
+    useEffect(() => {
+        fetchOptions();
+    }, []);
+
+    const handleSelectedChange = async (e: any, newValue: Player | null) => {
+        // TODO run SELECT query for new value to pull most recent data
+
+        setSelectedPlayer(newValue);
+    };
 
     return (
         <div>
@@ -122,10 +145,7 @@ const PlayerInfoPage = () => {
                         value={selectedPlayer}
                         options={options}
                         getOptionLabel={(option) => option.name}
-                        onChange={(e: any, newValue: Player | null) => {
-                            // TODO run SELECT query for new value to pull most recent data
-                            setSelectedPlayer(newValue);
-                        }}
+                        onChange={handleSelectedChange}
                         isOptionEqualToValue={(option, value) =>
                             option.playerID === value.playerID
                         }

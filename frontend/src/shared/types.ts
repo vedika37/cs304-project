@@ -31,7 +31,7 @@ export const PlayerObj = {
     scheduleID: "",
 };
 
-export type Player = typeof PlayerObj | null;
+export type Player = typeof PlayerObj;
 
 // export type Player = {
 //     playerID: string;
@@ -65,6 +65,6 @@ export type User = Player;
 
 export interface UserContextType {
     isAuthenticated: boolean;
-    user: User;
+    user: User | null;
     authLogin: (authUserID: string) => void;
 }
