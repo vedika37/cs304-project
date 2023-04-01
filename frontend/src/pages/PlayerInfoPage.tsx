@@ -26,14 +26,15 @@ import ViewContext from "../context/ViewContext";
 
 interface PIProps {
     player: Player | null;
+    ctx: any;
 }
 
-const PlayerInfo = ({ player }: PIProps) => {
+const PlayerInfo = ({ player, ctx }: PIProps) => {
     return (
         <Grid
             container
             spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
+            columns={{ xs: 4, sm: 6, md: 12 }}
         >
             {Object.entries(PlayerObj).map(([key, value], i) => {
                 return (
@@ -55,17 +56,19 @@ const PlayerInfo = ({ player }: PIProps) => {
                 );
             })}
             <Grid item xs={2} sm={3} md={3} textAlign="center">
-                <Button
-                    variant="outlined"
-                    sx={{
-                        height: "90%",
-                        width: "90%",
-                        top: "50%",
-                        transform: "translate(0,-50%)",
-                    }}
-                >
-                    More
-                </Button>
+                {ctx.more && (
+                    <Button
+                        variant="outlined"
+                        sx={{
+                            height: "100%",
+                            width: "100%",
+                            top: "50%",
+                            transform: "translate(0,-50%)",
+                        }}
+                    >
+                        More
+                    </Button>
+                )}
             </Grid>
         </Grid>
     );
@@ -102,14 +105,17 @@ const PlayerInfoPage = () => {
         // intial fetch of options will be from SELECT * on backend
         // const options = [tmpPlayer];
         const res = await fetch("http://localhost:3001/players");
-        const data = await res.json();
-        // console.log(data);
-        const sData = data.map((o: any) => {
-            delete o["id"];
-            return o;
-        });
-        // console.log("sanitized", sData);
-        setOptions(sData);
+        // console.log(res.status);
+        if (res.status === 200) {
+            const data = await res.json();
+            // console.log(data);
+            const sData = data.map((o: any) => {
+                delete o["id"];
+                return o;
+            });
+            // console.log("sanitized", sData);
+            setOptions(sData);
+        }
     };
 
     useEffect(() => {
@@ -129,7 +135,7 @@ const PlayerInfoPage = () => {
                     <>
                         <Typography variant="h6">MY PROFILE</Typography>
                         <Divider sx={{ mt: 1, mb: 1 }} />
-                        <PlayerInfo player={tmpPlayer} />
+                        <PlayerInfo player={tmpPlayer} ctx={{ more: true }} />
                         <Divider sx={{ mt: 2, mb: 1 }} />
                     </>
                 )}
@@ -157,7 +163,10 @@ const PlayerInfoPage = () => {
                 </Stack>
                 <Divider sx={{ mt: 1, mb: 1 }} />
                 {/*Selected Player Info*/}
-                <PlayerInfo player={selectedPlayer} />
+                <PlayerInfo
+                    player={selectedPlayer}
+                    ctx={selectedPlayer ? { more: true } : { more: false }}
+                />
 
                 <Divider sx={{ mt: 2, mb: 1 }} />
                 {/*Player Table*/}
