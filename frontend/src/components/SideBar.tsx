@@ -26,6 +26,8 @@ import HealingIcon from "@mui/icons-material/Healing";
 import EventIcon from "@mui/icons-material/Event";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ScoreboardIcon from "@mui/icons-material/Scoreboard";
+import SportsIcon from "@mui/icons-material/Sports";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 // MUI drawer template styling //////////////////////////////
 
@@ -98,7 +100,22 @@ const SideBar = () => {
                             <SettingsAccessibilityIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary="Player Profile"
+                            primary="Player Profiles"
+                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                        />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem
+                    key="coach-info"
+                    disablePadding
+                    sx={{ display: "block" }}
+                >
+                    <ListItemButton onClick={() => navigate("coach-info")}>
+                        <ListItemIcon>
+                            <SportsIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Coach Profiles"
                             sx={{ opacity: sideBarOpen ? 1 : 0 }}
                         />
                     </ListItemButton>
@@ -128,7 +145,7 @@ const SideBar = () => {
                             <GroupsIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary="Team Profile"
+                            primary="Team Profiles"
                             sx={{ opacity: sideBarOpen ? 1 : 0 }}
                         />
                     </ListItemButton>
@@ -143,7 +160,7 @@ const SideBar = () => {
                             <EventIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary="Schedule"
+                            primary="Schedules"
                             sx={{ opacity: sideBarOpen ? 1 : 0 }}
                         />
                     </ListItemButton>
@@ -159,6 +176,21 @@ const SideBar = () => {
                         </ListItemIcon>
                         <ListItemText
                             primary="Game History"
+                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                        />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem
+                    key="ranking-info"
+                    disablePadding
+                    sx={{ display: "block" }}
+                >
+                    <ListItemButton onClick={() => navigate("ranking-info")}>
+                        <ListItemIcon>
+                            <EmojiEventsIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Rankings"
                             sx={{ opacity: sideBarOpen ? 1 : 0 }}
                         />
                     </ListItemButton>

@@ -36,11 +36,20 @@ export const TeamObj = {
     division: "",
 };
 
+export const CoachObj = {
+    coachID: "",
+    name: "",
+    phoneNumber: "",
+    specialization: "",
+};
+
+export type Coach = typeof CoachObj;
+
 export type Team = typeof TeamObj;
 
 export type Player = typeof PlayerObj;
 
-export type User = Player;
+export type User = Player | Coach;
 
 export interface UserContextType {
     isAuthenticated: boolean;

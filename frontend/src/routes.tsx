@@ -8,6 +8,8 @@ import PlayerInfoPage from "./pages/PlayerInfoPage";
 import ScheduleInfoPage from "./pages/ScheduleInfoPage";
 import TeamInfoPage from "./pages/TeamInfoPage";
 import GameInfoPage from "./pages/GameInfoPage";
+import CoachInfoPage from "./pages/CoachInfoPage";
+import RankingInfoPage from "./pages/RankingInfoPage";
 
 export default function AppRouter() {
     const routes = useRoutes([
@@ -24,6 +26,10 @@ export default function AppRouter() {
                     element: <PlayerInfoPage />,
                 },
                 {
+                    path: "coach-info",
+                    element: <CoachInfoPage />,
+                },
+                {
                     path: "injury-info",
                     element: <InjuryInfoPage />,
                 },
@@ -38,6 +44,10 @@ export default function AppRouter() {
                 {
                     path: "game-info",
                     element: <GameInfoPage />,
+                },
+                {
+                    path: "ranking-info",
+                    element: <RankingInfoPage />,
                 },
             ],
         },
