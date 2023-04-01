@@ -168,7 +168,8 @@ const TeamInfoPage = () => {
                 <Divider sx={{ mt: 2, mb: 1 }} />
                 {/*Team Table*/}
                 <Grid>
-                    <Typography variant="h6">TODO Table</Typography>
+                    <Typography variant="h6">TODO</Typography>
+                    <Button variant="outlined">Get Players</Button>
                 </Grid>
             </Box>
         </div>

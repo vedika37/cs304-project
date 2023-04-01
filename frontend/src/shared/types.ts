@@ -56,3 +56,7 @@ export interface UserContextType {
     user: User | null;
     authLogin: (authUserID: string) => void;
 }
+
+export interface Season {
+    season: string;
+}

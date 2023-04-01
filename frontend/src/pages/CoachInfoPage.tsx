@@ -165,7 +165,8 @@ const CoachInfoPage = () => {
                 <Divider sx={{ mt: 2, mb: 1 }} />
                 {/*Coach Table*/}
                 <Grid>
-                    <Typography variant="h6">TODO Table</Typography>
+                    <Typography variant="h6">TODO</Typography>
+                    <Button variant="outlined">Display Schedules</Button>
                 </Grid>
             </Box>
         </div>
