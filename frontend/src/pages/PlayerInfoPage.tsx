@@ -141,9 +141,7 @@ const PlayerInfoPage = () => {
                 )}
                 <Stack direction="row" justifyContent="space-between">
                     <Box display="flex" alignItems="end">
-                        <Typography variant="h6">
-                            SELECT ANOTHER PLAYER
-                        </Typography>
+                        <Typography variant="h6">SELECT A PLAYER</Typography>
                     </Box>
                     <Autocomplete
                         disablePortal

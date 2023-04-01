@@ -141,7 +141,7 @@ export default function RankingInfoPage() {
         // console.log(res.status);
         if (res.status === 200) {
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
             setOptions(data);
         }
     };
@@ -156,32 +156,34 @@ export default function RankingInfoPage() {
     };
 
     return (
-        <>
-            <Stack direction="row" justifyContent="space-between">
-                <Box display="flex" alignItems="end">
-                    <Typography variant="h6">SELECT A SEASON</Typography>
-                </Box>
-                <Autocomplete
-                    disablePortal
-                    id="season-selection"
-                    value={selectedSeason}
-                    options={options}
-                    onChange={handleSelectedChange}
-                    sx={{ mt: 1, width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Season" />
-                    )}
-                />
-            </Stack>
-            <Divider sx={{ mt: 1, mb: 1 }} />
-            <Paper style={{ height: "80vh", width: "100%" }}>
-                <TableVirtuoso
-                    data={rows}
-                    components={VirtuosoTableComponents}
-                    fixedHeaderContent={fixedHeaderContent}
-                    itemContent={rowContent}
-                />
-            </Paper>
-        </>
+        <div>
+            <Box sx={{ flexGrow: 1 }}>
+                <Stack direction="row" justifyContent="space-between">
+                    <Box display="flex" alignItems="end">
+                        <Typography variant="h6">SELECT A SEASON</Typography>
+                    </Box>
+                    <Autocomplete
+                        disablePortal
+                        id="season-selection"
+                        value={selectedSeason}
+                        options={options}
+                        onChange={handleSelectedChange}
+                        sx={{ mt: 1, width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Season" />
+                        )}
+                    />
+                </Stack>
+                <Divider sx={{ mt: 1, mb: 1 }} />
+                <Paper style={{ height: "80vh", width: "100%" }}>
+                    <TableVirtuoso
+                        data={rows}
+                        components={VirtuosoTableComponents}
+                        fixedHeaderContent={fixedHeaderContent}
+                        itemContent={rowContent}
+                    />
+                </Paper>
+            </Box>
+        </div>
     );
 }

@@ -132,9 +132,7 @@ const TeamInfoPage = () => {
                 )}
                 <Stack direction="row" justifyContent="space-between">
                     <Box display="flex" alignItems="end">
-                        <Typography variant="h6">
-                            SELECT ANOTHER TEAM
-                        </Typography>
+                        <Typography variant="h6">SELECT A TEAM</Typography>
                     </Box>
                     <Autocomplete
                         disablePortal
