@@ -165,6 +165,8 @@ const SideBar = () => {
                         />
                     </ListItemButton>
                 </ListItem>
+                {/*
+                // deprecated 
                 <ListItem
                     key="game-info"
                     disablePadding
@@ -179,7 +181,7 @@ const SideBar = () => {
                             sx={{ opacity: sideBarOpen ? 1 : 0 }}
                         />
                     </ListItemButton>
-                </ListItem>
+                </ListItem> */}
                 <ListItem
                     key="ranking-info"
                     disablePadding

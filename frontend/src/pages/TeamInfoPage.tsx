@@ -64,7 +64,8 @@ const TeamInfo = ({ team, ctx }: TIProps) => {
                                 variant="overline"
                                 color="text.secondary"
                             >
-                                RANKING
+                                {/* TODO */}
+                                CURRENT RANKING (?QUERY)
                             </Typography>
                             <Typography variant="h5">{"TODO"}</Typography>
                         </CardContent>

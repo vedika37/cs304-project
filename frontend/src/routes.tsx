@@ -41,20 +41,22 @@ export default function AppRouter() {
                     path: "schedule-info",
                     element: <ScheduleInfoPage />,
                 },
-                {
-                    path: "game-info",
-                    element: <GameInfoPage />,
-                },
+                // deprecated
+                // {
+                //     path: "game-info",
+                //     element: <GameInfoPage />,
+                // },
                 {
                     path: "ranking-info",
                     element: <RankingInfoPage />,
                 },
             ],
         },
-        {
-            path: "login",
-            element: <LoginPage />,
-        },
+        // unused
+        // {
+        //     path: "login",
+        //     element: <LoginPage />,
+        // },
         {
             path: "404",
             element: <Page404 />,
