@@ -1,4 +1,4 @@
-DROP TABLE Injury;
+DROP TABLE Injury CASCADE constraint;
 DROP TABLE Treatment;
 
 DROP TABLE playerHasRankingIsInTeamFollows CASCADE constraint;
@@ -141,17 +141,15 @@ CREATE TABLE playerHasRankingIsInTeamFollows(
                                                 playerID	varchar(20),
                                                 name		varchar(20),
                                                 position	varchar(20),
-                                                playerNumber	int		UNIQUE,
+                                                playerNumber	int,
                                                 phoneNumber	varchar(20),
-                                                rankNumber	int		UNIQUE,
-                                                rankType	varchar(20)	UNIQUE,
-                                                teamType	varchar(20)	UNIQUE,
-                                                teamName	varchar(20)	UNIQUE,
-                                                division	varchar(20)	UNIQUE,
-                                                scheduleID 		varchar(20) 	UNIQUE,
+                                                rankNumber	int,
+                                                rankType	varchar(20),
+                                                teamType	varchar(20),
+                                                teamName	varchar(20),
+                                                division	varchar(20),
+                                                scheduleID 		varchar(20),
                                                 PRIMARY KEY (playerID),
-    -- FOREIGN KEY (scheduleID) REFERENCES GameSchedule(scheduleID),
-    -- FOREIGN KEY (scheduleID) REFERENCES TrainingSchedule(scheduleID), -- SportsSchedule check contributes
                                                 FOREIGN KEY (scheduleID) REFERENCES SportsSchedule(scheduleID),
                                                 FOREIGN KEY (teamType, teamName, division) REFERENCES Team(type, name, division)
 );
@@ -436,6 +434,18 @@ VALUES ('P002', 'Jane Smith', 'Defender', 5, '555-5678', 2, 'national', 'Basketb
 INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNumber, phoneNumber, rankNumber, rankType, teamType, teamName, division, scheduleID)
 VALUES ('P003', 'Bob Johnson', 'Midfielder', 10, '555-9101', 3, 'state', 'Football', 'The Giants', 'North', 'S003');
 
+INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNumber, phoneNumber, rankNumber, rankType, teamType, teamName, division, scheduleID)
+VALUES ('P004', 'Jahn Doe', 'Forward', 8, '558-1234', 2, 'team', 'Soccer', 'The Lions', 'Premier League', 'S001');
+
+INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNumber, phoneNumber, rankNumber, rankType, teamType, teamName, division, scheduleID)
+VALUES ('P005', 'Jehn Doe', 'Forward', 9, '552-1234', 3, 'team', 'Soccer', 'The Lions', 'Premier League', 'S001');
+
+-- INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNumber, phoneNumber, rankNumber, rankType, teamType, teamName, division, scheduleID)
+-- VALUES ('P004', 'John Smith', 'Forward', 16, '555-1234', 3, 'team', 'Baseball', 'Based', 'National League', 'S004');
+
+-- INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNumber, phoneNumber, rankNumber, rankType, teamType, teamName, division, scheduleID)
+-- VALUES ('P005', 'Emily Nguyen', 'Guard', 12, '555-5678', 1, 'national', 'Hockey', 'Icebreakers', 'U21 Division', 'S005');
+
 
 -- hasPhysicalCharacteristics
 
@@ -458,7 +468,13 @@ INSERT INTO displaysPerformance (playerID, season, performancePoints)
 VALUES ('P002', '2021', 80);
 
 INSERT INTO displaysPerformance (playerID, season, performancePoints)
-VALUES ('P003', '2020', 50);
+VALUES ('P003', '2020', 10);
+
+INSERT INTO displaysPerformance (playerID, season, performancePoints)
+VALUES ('P004', '2020', 80);
+
+INSERT INTO displaysPerformance (playerID, season, performancePoints)
+VALUES ('P005', '2020', 100);
 
 
 -- Trains
