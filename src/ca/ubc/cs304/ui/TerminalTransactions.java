@@ -8,7 +8,7 @@ import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.model.CoachModel;
 
 /**
- * The class is only responsible for handling terminal text inputs. 
+ * The class is only responsible for handling terminal text inputs.
  */
 public class TerminalTransactions {
 	private static final String EXCEPTION_TAG = "[EXCEPTION]";
@@ -61,18 +61,23 @@ public class TerminalTransactions {
 
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
-		
-		while (choice != 5) {
+
+		while (choice != 13) {
 			System.out.println();
 			System.out.println("1. Insert coach");
 			System.out.println("2. Delete coach");
 			System.out.println("3. Update coach name");
 			System.out.println("4. Show coach");
-			System.out.println("5. Quit");
-            System.out.println("6. Show all schedule ids of all schedules created by coach");
-            System.out.println("7. Show player ");
-            System.out.println("8. Show ranking for all players in a given team");
-			System.out.print("Please choose one of the above 6 options: ");
+			System.out.println("5. Show players ranked by season");
+			System.out.println("6. Show all schedule ids of all schedules created by coach");
+			System.out.println("7. Show player ");
+			System.out.println("8. Show ranking for all players in a given team");
+			System.out.println("9. Show the number of players in each team");
+			System.out.println("10. Show the high performing teams");
+			System.out.println("11. Show the highest performing player in a team");
+			System.out.println("12. Show the highest performing team");
+			System.out.println("13. Quit");
+			System.out.print("Please choose one of the above 13 options: ");
 
 			choice = readInteger(false);
 
@@ -80,33 +85,48 @@ public class TerminalTransactions {
 
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
-				case 1:  
-					handleInsertOption(); 
-					break;
-				case 2:  
-					handleDeleteOption(); 
-					break;
-				case 3: 
-					handleUpdateOption();
-					break;
-				case 4:  
-					delegate.showCoach();
-					break;
-				case 5:
-					handleQuitOption();
-					break;
-                case 6:
-                    handleJoinOption();
-                    break;
-                case 7:
-                    delegate.showPlayers();
-                    break;
-                case 8:
-                    handleDivisionOption();
-                    break;
-				default:
-					System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
-					break;
+					case 1:
+						handleInsertOption();
+						break;
+					case 2:
+						handleDeleteOption();
+						break;
+					case 3:
+						handleUpdateOption();
+						break;
+					case 4:
+						delegate.showCoach();
+						break;
+					case 5:
+						handleProjectionOption();
+						break;
+					case 6:
+						handleJoinOption();
+						break;
+					case 7:
+						delegate.showPlayers();
+						break;
+					case 8:
+						handleDivisionOption();
+						break;
+					case 9:
+						handleAggregationOption();
+						break;
+					case 10:
+						handleAggregationWithHavingOption();
+						break;
+					case 11:
+						handleAggregationOption2();
+						break;
+					case 12:
+						handleNestedAggregationOption();
+						break;
+					case 13:
+						handleQuitOption();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
+						break;
 				}
 			}
 		}
@@ -193,12 +213,20 @@ public class TerminalTransactions {
 		delegate.updateCoach(coachID, name);
 	}
 
-    private void handleJoinOption() {
-        String coachID = null;
-        while (coachID == null || coachID.length() <= 0) {
-            System.out.print("Please enter the coach ID you wish to check the schedule for: ");
-            coachID = readLine().trim();
-        }
+	private void handleProjectionOption() {
+		String season = null;
+		while (season == null || season.length() <= 0) {
+			System.out.print("Please enter the season you wish to check the ranks for: ");
+			season = readLine().trim();
+		}
+		delegate.rankBySeason(season);
+	}
+	private void handleJoinOption() {
+		String coachID = null;
+		while (coachID == null || coachID.length() <= 0) {
+			System.out.print("Please enter the coach ID you wish to check the schedule for: ");
+			coachID = readLine().trim();
+		}
 
 		delegate.showAllSchedulesMadeByCoach(coachID);
 	}
@@ -210,9 +238,34 @@ public class TerminalTransactions {
 			teamName = readLine().trim();
 		}
 
-        delegate.showAllPlayersAndRanksInTeam(teamName);
-    }
-	
+		delegate.showAllPlayersAndRanksInTeam(teamName);
+	}
+
+	private void handleAggregationOption() {
+//        String givenTeamName = null;
+//        while (givenTeamName == null || givenTeamName.length() <= 0) {
+//            System.out.print("Please enter the team name to see how many players are in there: ");
+//            givenTeamName = readLine().trim();
+//        }
+
+		delegate.showCountOfAllTeams();
+	}
+	private void handleAggregationWithHavingOption() {
+		delegate.showHighPerformingTeams();
+	}
+
+	private void handleAggregationOption2(){
+		String teamName = null;
+		while (teamName == null || teamName.length() <= 0) {
+			System.out.print("Please enter the name of the team you wish to check the players for: ");
+			teamName = readLine().trim();
+		}
+		delegate.showStarPlayer(teamName);
+	}
+
+	private void handleNestedAggregationOption() {
+		delegate.showBestPerformingTeam();
+	}
 	private int readInteger(boolean allowEmpty) {
 		String line = null;
 		int input = INVALID_INPUT;

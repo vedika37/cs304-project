@@ -20,7 +20,7 @@ public class DatabaseConnectionHandler {
     // Use this version of the ORACLE_URL if you are running the code off of the server
 //    private static final String ORACLE_URL = "jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu";
     // Use this version of the ORACLE_URL if you are tunneling into the undergrad servers
- private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
+    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
 
@@ -111,19 +111,19 @@ public class DatabaseConnectionHandler {
 
         return result.toArray(new CoachModel[result.size()]);
     }
- // update query
- public void updateCoach(String coachID, String name) {
-    try {
-      PreparedStatement ps = connection.prepareStatement("UPDATE coach SET name = ? WHERE coachID = ?");
-      ps.setString(1, name);
-      ps.setString(2, coachID);
+    // update query
+    public void updateCoach(String coachID, String name) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE coach SET name = ? WHERE coachID = ?");
+            ps.setString(1, name);
+            ps.setString(2, coachID);
 
-      int rowCount = ps.executeUpdate();
-      if (rowCount == 0) {
-          System.out.println(WARNING_TAG + " Coach " + coachID + " does not exist!");
-      }
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(WARNING_TAG + " Coach " + coachID + " does not exist!");
+            }
 
-      connection.commit();
+            connection.commit();
 
             ps.close();
         } catch (SQLException e) {
@@ -165,38 +165,38 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
- // selection projection join query
- public ArrayList<SportsScheduleModel> showAllSchedulesMadeByCoach(String coachID) {
-     ArrayList<SportsScheduleModel> result = new ArrayList<>();
+    // selection projection join query
+    public ArrayList<SportsScheduleModel> showAllSchedulesMadeByCoach(String coachID) {
+        ArrayList<SportsScheduleModel> result = new ArrayList<>();
         try {
-         PreparedStatement ps = connection.prepareStatement("SELECT S.scheduleID, S.startTime, S.endTime, s.season\n" +
-                 "         FROM      Coach C, Contributes Co, SportsSchedule S\n" +
-                 "         WHERE   C.coachID = ? AND\n" +
-                 "         C.coachID = Co.coachID AND\n" +
-                 "         Co.scheduleID = S.scheduleID");
-         ps.setString(1, coachID);
-         ResultSet rs = ps.executeQuery();
+            PreparedStatement ps = connection.prepareStatement("SELECT S.scheduleID, S.startTime, S.endTime, s.season\n" +
+                    "         FROM      Coach C, Contributes Co, SportsSchedule S\n" +
+                    "         WHERE   C.coachID = ? AND\n" +
+                    "         C.coachID = Co.coachID AND\n" +
+                    "         Co.scheduleID = S.scheduleID");
+            ps.setString(1, coachID);
+            ResultSet rs = ps.executeQuery();
 
 
-             while(rs.next()) {
-                     SportsScheduleModel model = new SportsScheduleModel(rs.getString("scheduleID"),
-                             rs.getString("startTime"),
-                             rs.getString("endTime"),
-                             rs.getString("season"));
-                     result.add(model);
-                     System.out.println(model.getScheduleID().toString());
-                 }
+            while(rs.next()) {
+                SportsScheduleModel model = new SportsScheduleModel(rs.getString("scheduleID"),
+                        rs.getString("startTime"),
+                        rs.getString("endTime"),
+                        rs.getString("season"));
+                result.add(model);
+                System.out.println(model.getScheduleID().toString());
+            }
 
-         rs.close();
-         ps.close();
-         connection.commit();
-     } catch (SQLException e) {
-         System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-         rollbackConnection();
-     }
+            rs.close();
+            ps.close();
+            connection.commit();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
 
-     return result;
- }
+        return result;
+    }
 
     // division query
     public ArrayList<PlayerHasRankingIsInTeamFollowsModel> showAllPlayersAndRanksInTeam(String givenTeamName) {
@@ -263,7 +263,7 @@ public class DatabaseConnectionHandler {
                         rs.getString("teamName"),
                         rs.getString("division"),
                         rs.getString("scheduleID")
-                        );
+                );
 
                 result.add(model);
             }
@@ -478,27 +478,27 @@ public class DatabaseConnectionHandler {
 //     CoachModel coach1 = new CoachModel("C004", "Sarah Lee", "555-1357", "Goalkeeping");
 //    insertCoach(coach1);
 
- }
-
- private void dropBranchTableIfExists() {
-    try {
-       Statement stmt = connection.createStatement();
-       ResultSet rs = stmt.executeQuery("select table_name from user_tables");
-
-       while(rs.next()) {
-          if(rs.getString(1).toLowerCase().equals("coach")) {
-             stmt.execute("DROP TABLE coach");
-              stmt.execute("DROP TABLE contributes");
-              stmt.execute("DROP TABLE sportsschedule");
-              stmt.execute("DROP TABLE playerHasRankingIsInTeamFollowsModel");
-              break;
-          }
-       }
-
-       rs.close();
-       stmt.close();
-    } catch (SQLException e) {
-       System.out.println(EXCEPTION_TAG + " " + e.getMessage());
     }
- }
+
+    private void dropBranchTableIfExists() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select table_name from user_tables");
+
+            while(rs.next()) {
+                if(rs.getString(1).toLowerCase().equals("coach")) {
+                    stmt.execute("DROP TABLE coach");
+                    stmt.execute("DROP TABLE contributes");
+                    stmt.execute("DROP TABLE sportsschedule");
+                    stmt.execute("DROP TABLE playerHasRankingIsInTeamFollowsModel");
+                    break;
+                }
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+    }
 }
