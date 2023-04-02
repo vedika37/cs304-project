@@ -11,11 +11,11 @@ import ca.ubc.cs304.ui.TerminalTransactions;
 /**
  * This is the main controller class that will orchestrate everything.
  */
-public class Coach implements LoginWindowDelegate, TerminalTransactionsDelegate {
+public class Controller implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
 
-    public Coach() {
+    public Controller() {
         dbHandler = new DatabaseConnectionHandler();
     }
 
@@ -146,7 +146,25 @@ public class Coach implements LoginWindowDelegate, TerminalTransactionsDelegate 
         }
     }
 
+    public void showCountOfAllTeams() {
+        dbHandler.showCountOfAllTeams();
+    }
 
+    public void showHighPerformingTeams() {
+        dbHandler.showHighPerformingTeams();
+    }
+
+    public void showStarPlayer(String teamName) {
+        dbHandler.showStarPlayer(teamName);
+    }
+
+    public void showBestPerformingTeam() {
+        dbHandler.showBestPerformingTeam();
+    }
+
+    public void rankBySeason(String season){
+        dbHandler.rankBySeason(season);
+    }
     /**
      * TerminalTransactionsDelegate Implementation
      * <p>
@@ -175,7 +193,7 @@ public class Coach implements LoginWindowDelegate, TerminalTransactionsDelegate 
      * Main method called at launch time
      */
     public static void main(String args[]) {
-        Coach coach = new Coach();
-        coach.start();
+        Controller controller = new Controller();
+        controller.start();
     }
 }
