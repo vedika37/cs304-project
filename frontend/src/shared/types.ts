@@ -30,6 +30,15 @@ export const PlayerObj = {
     scheduleID: "",
 };
 
+export const PlayerPhysicalObj = {
+    age: 0,
+    weight: 0,
+    height: 0,
+    dateChecked: Date,
+};
+
+export type PlayerPhysical = typeof PlayerPhysicalObj;
+
 export const TeamObj = {
     type: "",
     name: "",

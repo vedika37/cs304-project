@@ -7,6 +7,8 @@ import {
     ViewContextType,
     View,
     PlayerObj,
+    PlayerPhysicalObj,
+    PlayerPhysical,
 } from "../shared/types";
 import {
     Autocomplete,
@@ -17,19 +19,22 @@ import {
     Container,
     Divider,
     Grid,
+    Modal,
     Paper,
     Stack,
     TextField,
     Typography,
 } from "@mui/material";
 import ViewContext from "../context/ViewContext";
+import { InfoPopup } from "../shared/InfoPopup";
 
 interface PIProps {
     player: Player | null;
     ctx: any;
+    handleMoreInfo: () => void;
 }
 
-const PlayerInfo = ({ player, ctx }: PIProps) => {
+const PlayerInfo = ({ player, ctx, handleMoreInfo }: PIProps) => {
     return (
         <Grid
             container
@@ -56,19 +61,18 @@ const PlayerInfo = ({ player, ctx }: PIProps) => {
                 );
             })}
             <Grid item xs={2} sm={3} md={3} textAlign="center">
-                {ctx.more && (
-                    <Button
-                        variant="outlined"
-                        sx={{
-                            height: "100%",
-                            width: "100%",
-                            top: "50%",
-                            transform: "translate(0,-50%)",
-                        }}
-                    >
-                        More
-                    </Button>
-                )}
+                <Button
+                    variant="outlined"
+                    sx={{
+                        height: "100%",
+                        width: "100%",
+                        top: "50%",
+                        transform: "translate(0,-50%)",
+                    }}
+                    onClick={handleMoreInfo}
+                >
+                    More
+                </Button>
             </Grid>
         </Grid>
     );
@@ -97,7 +101,6 @@ const PlayerInfoPage = () => {
     };
 
     const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
-
     const [options, setOptions] = useState<Player[]>([]);
 
     const fetchOptions = async () => {
@@ -128,6 +131,23 @@ const PlayerInfoPage = () => {
         setSelectedPlayer(newValue);
     };
 
+    const handleMoreInfo = async () => {
+        // console.log("More");
+
+        if (selectedPlayer) {
+            // console.log(selectedPlayer);
+            handleOpenInfoPopup();
+        } else {
+            console.log("please select a player");
+        }
+
+        // handleOpenInfoPopup();
+    };
+
+    const [moreInfoOpen, setMoreInfoOpen] = React.useState(false);
+    const handleOpenInfoPopup = () => setMoreInfoOpen(true);
+    const handleCloseInfoPopup = () => setMoreInfoOpen(false);
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -135,7 +155,11 @@ const PlayerInfoPage = () => {
                     <>
                         <Typography variant="h6">MY PROFILE</Typography>
                         <Divider sx={{ mt: 1, mb: 1 }} />
-                        <PlayerInfo player={tmpPlayer} ctx={{ more: true }} />
+                        <PlayerInfo
+                            player={tmpPlayer}
+                            ctx={{ more: true }}
+                            handleMoreInfo={handleMoreInfo}
+                        />
                         <Divider sx={{ mt: 2, mb: 1 }} />
                     </>
                 )}
@@ -164,13 +188,41 @@ const PlayerInfoPage = () => {
                 <PlayerInfo
                     player={selectedPlayer}
                     ctx={selectedPlayer ? { more: true } : { more: false }}
+                    handleMoreInfo={handleMoreInfo}
                 />
-
                 <Divider sx={{ mt: 2, mb: 1 }} />
+                {/* Modal for extra player info display */}
+                <Button onClick={handleOpenInfoPopup}>Open modal</Button>
+                <Modal open={moreInfoOpen} onClose={handleCloseInfoPopup}>
+                    <Paper>
+                        <InfoPopup>
+                            <Typography variant="h6">
+                                Player:{" "}
+                                {selectedPlayer ? selectedPlayer.name : ""}
+                            </Typography>
+                            <Divider />
+                            {Object.entries(PlayerPhysicalObj).map(
+                                ([key, value], index) => {
+                                    return (
+                                        <Typography key={index}>
+                                            {key}: {/* todo get physicals*/}
+                                        </Typography>
+                                    );
+                                }
+                            )}
+
+                            {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((v, i) => {
+                                console.log(i);
+                                return <div key={i}>v</div>;
+                            })} */}
+                        </InfoPopup>
+                    </Paper>
+                </Modal>
+
                 {/*Player Table*/}
-                <Grid>
+                {/* <Grid>
                     <Typography variant="h6">TODO Table</Typography>
-                </Grid>
+                </Grid> */}
             </Box>
         </div>
     );
