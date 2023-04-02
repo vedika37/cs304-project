@@ -40,8 +40,8 @@ export const PlayerPhysicalObj = {
 export type PlayerPhysical = typeof PlayerPhysicalObj;
 
 export const TeamObj = {
-    type: "",
     name: "",
+    type: "",
     division: "",
 };
 

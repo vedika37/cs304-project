@@ -15,6 +15,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Container from "@mui/material/Container";
 import { GameSchedule, TrainingSchedule } from "../shared/types";
 import Divider from "@mui/material/Divider";
+import { Stack, Button } from "@mui/material";
 
 function createData(
     scheduleID: string,
@@ -120,9 +121,18 @@ function ScheduleTable() {
     );
 }
 const ScheduleInfoPage = () => {
+    const handleOpenCreatePopup = () => {
+        console.log("create schedule popup");
+    };
+
     return (
         <Box>
-            <Typography variant="h6">Schedules</Typography>
+            <Stack direction="row" justifyContent="space-between">
+                <Typography variant="h6">Schedules</Typography>
+                <Button onClick={handleOpenCreatePopup} variant="outlined">
+                    CREATE
+                </Button>
+            </Stack>
             <Divider sx={{ mt: 0, mb: 1 }} />
             <Box
                 sx={{

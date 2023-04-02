@@ -56,6 +56,21 @@ const TeamInfo = ({ team, ctx }: TIProps) => {
                     </Grid>
                 );
             })}
+            {team && (
+                <Grid item xs={2} sm={3} md={3}>
+                    <Card style={{ height: "100%" }}>
+                        <CardContent>
+                            <Typography
+                                variant="overline"
+                                color="text.secondary"
+                            >
+                                RANKING
+                            </Typography>
+                            <Typography variant="h5">{"TODO"}</Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            )}
             <Grid item xs={2} sm={3} md={3} textAlign="center">
                 {ctx.edit && (
                     <Button
