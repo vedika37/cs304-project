@@ -69,3 +69,15 @@ export interface UserContextType {
 export interface Season {
     season: string;
 }
+
+export interface GameSchedule {
+    // scheduleID: string,
+    groupName: string;
+    league: string;
+}
+
+export interface TrainingSchedule {
+    // scheduleID: string,
+    groupName: string;
+    goal: string;
+}
