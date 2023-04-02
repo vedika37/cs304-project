@@ -283,33 +283,33 @@ VALUES ('C005', 'David Kim', '555-7890', 'Skating');
 
 -- SportsSchedule
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S001', TO_TIMESTAMP('2022-05-01 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-01 11:00', 'YYYY-MM-DD HH24:MI'), 'Spring');
+VALUES ('S001', TO_TIMESTAMP('2022-05-01 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-01 11:00', 'YYYY-MM-DD HH24:MI'), '2022Spring');
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S002', TO_TIMESTAMP('2022-05-08 10:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-08 12:00', 'YYYY-MM-DD HH24:MI'), 'Spring');
+VALUES ('S002', TO_TIMESTAMP('2022-05-08 10:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-08 12:00', 'YYYY-MM-DD HH24:MI'), '2022Spring');
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S003', TO_TIMESTAMP('2022-05-15 11:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-15 13:00', 'YYYY-MM-DD HH24:MI'), 'Spring');
+VALUES ('S003', TO_TIMESTAMP('2022-05-15 11:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-15 13:00', 'YYYY-MM-DD HH24:MI'), '2022Spring');
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S004', TO_TIMESTAMP('2022-05-22 12:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-22 14:00', 'YYYY-MM-DD HH24:MI'), 'Spring');
+VALUES ('S004', TO_TIMESTAMP('2022-05-22 12:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-22 14:00', 'YYYY-MM-DD HH24:MI'), '2022Spring');
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S005', TO_TIMESTAMP('2022-05-29 13:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-29 15:00', 'YYYY-MM-DD HH24:MI'), 'Spring');
+VALUES ('S005', TO_TIMESTAMP('2022-05-29 13:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-05-29 15:00', 'YYYY-MM-DD HH24:MI'), '2022Spring');
 
 
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S006', TO_TIMESTAMP('2022-01-01 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-01 11:00', 'YYYY-MM-DD HH24:MI'), 'Winter');
+VALUES ('S006', TO_TIMESTAMP('2022-01-01 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-01 11:00', 'YYYY-MM-DD HH24:MI'), '2021Winter');
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S007', TO_TIMESTAMP('2022-01-02 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-02 11:00', 'YYYY-MM-DD HH24:MI'), 'Winter');
+VALUES ('S007', TO_TIMESTAMP('2022-01-02 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-02 11:00', 'YYYY-MM-DD HH24:MI'), '2021Winter');
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S008', TO_TIMESTAMP('2022-01-03 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-03 11:00', 'YYYY-MM-DD HH24:MI'), 'Winter');
+VALUES ('S008', TO_TIMESTAMP('2022-01-03 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-03 11:00', 'YYYY-MM-DD HH24:MI'), '2021Winter');
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
-VALUES ('S009', TO_TIMESTAMP('2022-01-04 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-04 11:00', 'YYYY-MM-DD HH24:MI'), 'Winter');
+VALUES ('S009', TO_TIMESTAMP('2022-01-04 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-04 11:00', 'YYYY-MM-DD HH24:MI'), '2021Winter');
 
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)
 VALUES ('S010', TO_TIMESTAMP('2022-01-05 09:00', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('2022-01-05 11:00', 'YYYY-MM-DD HH24:MI'), 'Winter');
@@ -429,10 +429,10 @@ INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNum
 VALUES ('P001', 'John Doe', 'Forward', 7, '555-1234', 1, 'team', 'Soccer', 'The Lions', 'Premier League', 'S001');
 
 INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNumber, phoneNumber, rankNumber, rankType, teamType, teamName, division, scheduleID)
-VALUES ('P002', 'Jane Smith', 'Defender', 5, '555-5678', 2, 'national', 'Basketball', 'The Eagles', 'U14', 'S002');
+VALUES ('P002', 'Jane Smith', 'Defender', 5, '555-5678', 4, 'national', 'Basketball', 'The Eagles', 'U14', 'S002');
 
 INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNumber, phoneNumber, rankNumber, rankType, teamType, teamName, division, scheduleID)
-VALUES ('P003', 'Bob Johnson', 'Midfielder', 10, '555-9101', 3, 'state', 'Football', 'The Giants', 'North', 'S003');
+VALUES ('P003', 'Bob Johnson', 'Midfielder', 10, '555-9101', 5, 'state', 'Football', 'The Giants', 'North', 'S003');
 
 INSERT INTO playerHasRankingIsInTeamFollows (playerID, name, position, playerNumber, phoneNumber, rankNumber, rankType, teamType, teamName, division, scheduleID)
 VALUES ('P004', 'Jahn Doe', 'Forward', 8, '558-1234', 2, 'team', 'Soccer', 'The Lions', 'Premier League', 'S001');
@@ -462,19 +462,19 @@ VALUES ('P003', TO_TIMESTAMP('2022-01-03 11:00', 'YYYY-MM-DD HH24:MI'), 21, 150,
 -- displaysPerformance
 
 INSERT INTO displaysPerformance (playerID, season, performancePoints)
-VALUES ('P001', '2022', 100);
+VALUES ('P001', '2022Spring', 100);
 
 INSERT INTO displaysPerformance (playerID, season, performancePoints)
-VALUES ('P002', '2021', 80);
+VALUES ('P002', '2021Winter', 80);
 
 INSERT INTO displaysPerformance (playerID, season, performancePoints)
-VALUES ('P003', '2020', 10);
+VALUES ('P003', '2020Spring', 10);
 
 INSERT INTO displaysPerformance (playerID, season, performancePoints)
-VALUES ('P004', '2020', 80);
+VALUES ('P004', '2020Winter', 80);
 
 INSERT INTO displaysPerformance (playerID, season, performancePoints)
-VALUES ('P005', '2020', 100);
+VALUES ('P005', '2020Spring', 100);
 
 
 -- Trains
