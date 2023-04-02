@@ -7,6 +7,7 @@ import {
     ListItemButton,
     ListItemText,
     ListItemIcon,
+    Tooltip,
 } from "@mui/material";
 import React, { useContext } from "react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -90,81 +91,93 @@ const SideBar = () => {
             <Divider />
             <List>
                 {/* tabs/links go here */}
-                <ListItem
-                    key="player-info"
-                    disablePadding
-                    sx={{ display: "block" }}
-                >
-                    <ListItemButton onClick={() => navigate("player-info")}>
-                        <ListItemIcon>
-                            <SettingsAccessibilityIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Player Profiles"
-                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
-                        />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem
-                    key="coach-info"
-                    disablePadding
-                    sx={{ display: "block" }}
-                >
-                    <ListItemButton onClick={() => navigate("coach-info")}>
-                        <ListItemIcon>
-                            <SportsIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Coach Profiles"
-                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
-                        />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem
-                    key="injury-info"
-                    disablePadding
-                    sx={{ display: "block" }}
-                >
-                    <ListItemButton onClick={() => navigate("injury-info")}>
-                        <ListItemIcon>
-                            <HealingIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Injury History"
-                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
-                        />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem
-                    key="team-info"
-                    disablePadding
-                    sx={{ display: "block" }}
-                >
-                    <ListItemButton onClick={() => navigate("team-info")}>
-                        <ListItemIcon>
-                            <GroupsIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Team Profiles"
-                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
-                        />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem
-                    key="schedule-info"
-                    disablePadding
-                    sx={{ display: "block" }}
-                >
-                    <ListItemButton onClick={() => navigate("schedule-info")}>
-                        <ListItemIcon>
-                            <EventIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Schedules"
-                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
-                        />
-                    </ListItemButton>
-                </ListItem>
+                <Tooltip title="Player Profiles" placement="right" arrow>
+                    <ListItem
+                        key="player-info"
+                        disablePadding
+                        sx={{ display: "block" }}
+                    >
+                        <ListItemButton onClick={() => navigate("player-info")}>
+                            <ListItemIcon>
+                                <SettingsAccessibilityIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary="Player Profiles"
+                                sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                </Tooltip>
+                <Tooltip title="Coach Profiles" placement="right" arrow>
+                    <ListItem
+                        key="coach-info"
+                        disablePadding
+                        sx={{ display: "block" }}
+                    >
+                        <ListItemButton onClick={() => navigate("coach-info")}>
+                            <ListItemIcon>
+                                <SportsIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary="Coach Profiles"
+                                sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                </Tooltip>
+                <Tooltip title="Injury History" placement="right" arrow>
+                    <ListItem
+                        key="injury-info"
+                        disablePadding
+                        sx={{ display: "block" }}
+                    >
+                        <ListItemButton onClick={() => navigate("injury-info")}>
+                            <ListItemIcon>
+                                <HealingIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary="Injury History"
+                                sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                </Tooltip>
+                <Tooltip title="Team Profiles" placement="right" arrow>
+                    <ListItem
+                        key="team-info"
+                        disablePadding
+                        sx={{ display: "block" }}
+                    >
+                        <ListItemButton onClick={() => navigate("team-info")}>
+                            <ListItemIcon>
+                                <GroupsIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary="Team Profiles"
+                                sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                </Tooltip>
+                <Tooltip title="Schedules" placement="right" arrow>
+                    <ListItem
+                        key="schedule-info"
+                        disablePadding
+                        sx={{ display: "block" }}
+                    >
+                        <ListItemButton
+                            onClick={() => navigate("schedule-info")}
+                        >
+                            <ListItemIcon>
+                                <EventIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary="Schedules"
+                                sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                </Tooltip>
                 {/*
                 // deprecated 
                 <ListItem
@@ -182,21 +195,25 @@ const SideBar = () => {
                         />
                     </ListItemButton>
                 </ListItem> */}
-                <ListItem
-                    key="ranking-info"
-                    disablePadding
-                    sx={{ display: "block" }}
-                >
-                    <ListItemButton onClick={() => navigate("ranking-info")}>
-                        <ListItemIcon>
-                            <EmojiEventsIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Rankings"
-                            sx={{ opacity: sideBarOpen ? 1 : 0 }}
-                        />
-                    </ListItemButton>
-                </ListItem>
+                <Tooltip title="Rankings" placement="right" arrow>
+                    <ListItem
+                        key="ranking-info"
+                        disablePadding
+                        sx={{ display: "block" }}
+                    >
+                        <ListItemButton
+                            onClick={() => navigate("ranking-info")}
+                        >
+                            <ListItemIcon>
+                                <EmojiEventsIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary="Rankings"
+                                sx={{ opacity: sideBarOpen ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                </Tooltip>
             </List>
         </SideBarDrawer>
     );

@@ -22,6 +22,7 @@ import {
     Typography,
 } from "@mui/material";
 import ViewContext from "../context/ViewContext";
+import { createRoute } from "../shared/proxy";
 
 interface CIProps {
     coach: Coach | null;
@@ -96,7 +97,7 @@ const CoachInfoPage = () => {
 
     const fetchOptions = async () => {
         // todo error handling
-        const res = await fetch("http://localhost:3001/coaches");
+        const res = await fetch(createRoute("options/coaches"));
         // console.log(res.status);
         if (res.status === 200) {
             const data = await res.json();

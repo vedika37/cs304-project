@@ -22,6 +22,7 @@ import {
     Typography,
 } from "@mui/material";
 import ViewContext from "../context/ViewContext";
+import { createRoute } from "../shared/proxy";
 
 interface TIProps {
     team: Team | null;
@@ -111,7 +112,7 @@ const TeamInfoPage = () => {
 
     const fetchOptions = async () => {
         // todo error handling
-        const res = await fetch("http://localhost:3001/teams");
+        const res = await fetch(createRoute("options/teams"));
         // console.log(res.status);
         if (res.status === 200) {
             const data = await res.json();

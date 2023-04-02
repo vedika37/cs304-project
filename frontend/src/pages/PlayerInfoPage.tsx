@@ -27,6 +27,7 @@ import {
 } from "@mui/material";
 import ViewContext from "../context/ViewContext";
 import { InfoPopup } from "../shared/InfoPopup";
+import { createRoute } from "../shared/proxy";
 
 interface PIProps {
     player: Player | null;
@@ -107,7 +108,7 @@ const PlayerInfoPage = () => {
         // TODO actually integrate w server later
         // intial fetch of options will be from SELECT * on backend
         // const options = [tmpPlayer];
-        const res = await fetch("http://localhost:3001/players");
+        const res = await fetch(createRoute("options/players"));
         // console.log(res.status);
         if (res.status === 200) {
             const data = await res.json();

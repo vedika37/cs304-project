@@ -16,6 +16,7 @@ import {
     Typography,
 } from "@mui/material";
 import { Season } from "../shared/types";
+import { createRoute } from "../shared/proxy";
 
 interface Data {
     rank: number;
@@ -137,7 +138,7 @@ export default function RankingInfoPage() {
 
     const fetchOptions = async () => {
         // todo error handling
-        const res = await fetch("http://localhost:3001/seasons");
+        const res = await fetch(createRoute("options/seasons"));
         // console.log(res.status);
         if (res.status === 200) {
             const data = await res.json();

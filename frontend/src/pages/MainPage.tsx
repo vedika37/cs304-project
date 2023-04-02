@@ -14,6 +14,7 @@ import {
     Typography,
 } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
+import { Player, Team } from "../shared/types";
 
 interface TPDProps {
     data: any[]; // todo type properly
@@ -71,6 +72,12 @@ const TopPerformerDisplay = ({ data, label, handleRefresh }: TPDProps) => {
 };
 
 const MainPage = () => {
+    const [topTeam, setTopTeam] = useState<Team | null>(null);
+    const [topPlayer, setTopPlayer] = useState<Player | null>(null);
+
+    const [topTeams, setTopTeams] = useState<Team[] | []>([]);
+    const [topPlayers, setTopPlayers] = useState<Player[] | []>([]);
+
     const refreshTopTeams = async () => {
         console.log("refreshing teams");
     };
@@ -80,8 +87,13 @@ const MainPage = () => {
     };
 
     const refreshOverview = async () => {
-        console.log("refreshing");
+        console.log("refreshing overview");
     };
+
+    useEffect(() => {
+        console.log("fetching overview data onmount");
+        refreshOverview();
+    }, []);
 
     return (
         <div>
@@ -108,7 +120,9 @@ const MainPage = () => {
                                 >
                                     TOP TEAM
                                 </Typography>
-                                <Typography variant="h5">aaa</Typography>
+                                <Typography variant="h5">
+                                    {topTeam ? topTeam.name : ""}
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Grid>
@@ -121,7 +135,9 @@ const MainPage = () => {
                                 >
                                     TOP PLAYER
                                 </Typography>
-                                <Typography variant="h5">bbbb</Typography>
+                                <Typography variant="h5">
+                                    {topPlayer ? topPlayer.name : ""}
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Grid>
@@ -129,13 +145,13 @@ const MainPage = () => {
                 {/*  */}
                 <Divider sx={{ mt: 1, mb: 1 }} />
                 <TopPerformerDisplay
-                    data={["AAA", "BB", "C", "d"]}
+                    data={topTeams.map((team) => team.name)}
                     label="TEAMS"
                     handleRefresh={refreshTopTeams}
                 />
                 <Divider sx={{ mt: 1, mb: 1 }} />
                 <TopPerformerDisplay
-                    data={["PLAYER1"]}
+                    data={topPlayers.map((player) => player.name)}
                     label="PLAYERS"
                     handleRefresh={refreshTopPlayers}
                 />
