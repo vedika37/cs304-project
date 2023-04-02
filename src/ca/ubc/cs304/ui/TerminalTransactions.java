@@ -15,39 +15,39 @@ public class TerminalTransactions {
 	private static final String WARNING_TAG = "[WARNING]";
 	private static final int INVALID_INPUT = Integer.MIN_VALUE;
 	private static final int EMPTY_INPUT = 0;
-	
+
 	private BufferedReader bufferedReader = null;
 	private TerminalTransactionsDelegate delegate = null;
 
 	public TerminalTransactions() {
 	}
-	
+
 	/**
 	 * Sets up the database to have a branch table with two tuples so we can insert/update/delete from it.
 	 * Refer to the databaseSetup.sql file to determine what tuples are going to be in the table.
 	 */
 	public void setupDatabase(TerminalTransactionsDelegate delegate) {
 		this.delegate = delegate;
-		
+
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
-		
+
 		while(choice != 1 && choice != 2) {
 			System.out.println("If you have a table called Coach in your database (capitialization of the name does not matter), it will be dropped and a new Coach table will be created.\nIf you want to proceed, enter 1; if you want to quit, enter 2.");
-			
+
 			choice = readInteger(false);
-			
+
 			if (choice != INVALID_INPUT) {
 				switch (choice) {
-				case 1:  
-					delegate.databaseSetup(); 
-					break;
-				case 2:  
-					handleQuitOption();
-					break;
-				default:
-					System.out.println(WARNING_TAG + " The number that you entered was not a valid option.\n");
-					break;
+					case 1:
+						delegate.databaseSetup();
+						break;
+					case 2:
+						handleQuitOption();
+						break;
+					default:
+						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.\n");
+						break;
 				}
 			}
 		}
@@ -55,11 +55,11 @@ public class TerminalTransactions {
 
 	/**
 	 * Displays simple text interface
-	 */ 
+	 */
 	public void showMainMenu(TerminalTransactionsDelegate delegate) {
 		this.delegate = delegate;
-		
-	    bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
 		
 		while (choice != 5) {
@@ -109,63 +109,63 @@ public class TerminalTransactions {
 					break;
 				}
 			}
-		}		
+		}
 	}
-	
+
 	private void handleDeleteOption() {
-        String coachID = null;
-        while (coachID == null || coachID.length() <= 0) {
-            System.out.print("Please enter the coach ID you wish to delete: ");
-            coachID = readLine().trim();
+		String coachID = null;
+		while (coachID == null || coachID.length() <= 0) {
+			System.out.print("Please enter the coach ID you wish to delete: ");
+			coachID = readLine().trim();
 //            if (coachID != INVALID_INPUT) {
-				delegate.deleteCoach(coachID);
+			delegate.deleteCoach(coachID);
 //			}
 		}
 	}
-	
+
 	private void handleInsertOption() {
-        String coachID = null;
+		String coachID = null;
 		while (coachID == null) {
 			System.out.print("Please enter the coach ID you wish to insert: ");
-            coachID = readLine().trim();
+			coachID = readLine().trim();
 		}
-		
+
 		String name = null;
 		while (name == null || name.length() <= 0) {
 			System.out.print("Please enter the coach name you wish to insert: ");
 			name = readLine().trim();
 		}
-		
+
 		// branch address is allowed to be null so we don't need to repeatedly ask for the address
 		System.out.print("Please enter the phone number you wish to insert: ");
 		String phoneNumber = null;
-        while (phoneNumber == null || phoneNumber.length() <= 0) {
-            System.out.print("Please enter the coach name you wish to insert: ");
-            phoneNumber = readLine().trim();
-        }
-		
+		while (phoneNumber == null || phoneNumber.length() <= 0) {
+			System.out.print("Please enter the coach name you wish to insert: ");
+			phoneNumber = readLine().trim();
+		}
+
 		String specialization = null;
 		while (specialization == null || specialization.length() <= 0) {
 			System.out.print("Please enter the specialization you wish to insert: ");
-            specialization = readLine().trim();
+			specialization = readLine().trim();
 		}
-		
+
 //		int phoneNumber = INVALID_INPUT;
 //		while (phoneNumber == INVALID_INPUT) {
 //			System.out.print("Please enter the branch phone number you wish to insert: ");
 //			phoneNumber = readInteger(true);
 //		}
-		
+
 		CoachModel model = new CoachModel(coachID,
-											name,
-											phoneNumber,
-											specialization);
+				name,
+				phoneNumber,
+				specialization);
 		delegate.insertCoach(model);
 	}
-	
+
 	private void handleQuitOption() {
 		System.out.println("Good Bye!");
-		
+
 		if (bufferedReader != null) {
 			try {
 				bufferedReader.close();
@@ -173,15 +173,15 @@ public class TerminalTransactions {
 				System.out.println("IOException!");
 			}
 		}
-		
+
 		delegate.terminalTransactionsFinished();
 	}
-	
+
 	private void handleUpdateOption() {
 		String coachID = null;
 		while (coachID == null || coachID.length() <= 0) {
 			System.out.print("Please enter the coach ID you wish to update: ");
-            coachID = readLine().trim();
+			coachID = readLine().trim();
 		}
 
 		String name = null;
@@ -200,15 +200,15 @@ public class TerminalTransactions {
             coachID = readLine().trim();
         }
 
-        delegate.showAllSchedulesMadeByCoach(coachID);
-    }
+		delegate.showAllSchedulesMadeByCoach(coachID);
+	}
 
-    private void handleDivisionOption() {
-        String teamName = null;
-        while (teamName == null || teamName.length() <= 0) {
-            System.out.print("Please enter the name of the team you wish to check the players for: ");
-            teamName = readLine().trim();
-        }
+	private void handleDivisionOption() {
+		String teamName = null;
+		while (teamName == null || teamName.length() <= 0) {
+			System.out.print("Please enter the name of the team you wish to check the players for: ");
+			teamName = readLine().trim();
+		}
 
         delegate.showAllPlayersAndRanksInTeam(teamName);
     }
@@ -230,7 +230,7 @@ public class TerminalTransactions {
 		}
 		return input;
 	}
-	
+
 	private String readLine() {
 		String result = null;
 		try {
