@@ -11,6 +11,13 @@ import ca.ubc.cs304.ui.TerminalTransactions;
 /**
  * This is the main controller class that will orchestrate everything.
  */
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+
+@SpringBootApplication
 public class Controller implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
@@ -193,6 +200,11 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
      * Main method called at launch time
      */
     public static void main(String args[]) {
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(Controller.class);
+
+        builder.headless(false);
+
+        ConfigurableApplicationContext context = builder.run(args);
         Controller controller = new Controller();
         controller.start();
     }
