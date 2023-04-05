@@ -6,4 +6,4 @@ The domain of this project is team management and player optimization across any
 Our database models the aspects of team management and optimization of our domain by allowing the application to be used by both Coaches, Players, and the organization itself to see coach history, player performance by season, create training schedules, choose the optimal team roster for a game etc.
 
 
-References: CPSC 304 Java Prokect: https://github.students.cs.ubc.ca/CPSC304/CPSC304_Java_Project
+References: CPSC 304 Java Project: https://github.students.cs.ubc.ca/CPSC304/CPSC304_Java_Project
