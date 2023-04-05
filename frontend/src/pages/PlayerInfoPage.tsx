@@ -62,7 +62,8 @@ const PlayerInfo = ({ player, ctx, handleMoreInfo }: PIProps) => {
                     </Grid>
                 );
             })}
-            <Grid item xs={2} sm={3} md={3} textAlign="center">
+            {/* UNUSED/DEPRECATED */}
+            {/* <Grid item xs={2} sm={3} md={3} textAlign="center">
                 <Button
                     variant="outlined"
                     sx={{
@@ -75,7 +76,7 @@ const PlayerInfo = ({ player, ctx, handleMoreInfo }: PIProps) => {
                 >
                     More
                 </Button>
-            </Grid>
+            </Grid> */}
         </Grid>
     );
 };

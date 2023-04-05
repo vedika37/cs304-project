@@ -57,7 +57,9 @@ const TeamInfo = ({ team, ctx }: TIProps) => {
                     </Grid>
                 );
             })}
-            {team && (
+            {/* UNUSED/DEPRECATED */}
+
+            {/* team && (
                 <Grid item xs={2} sm={3} md={3}>
                     <Card style={{ height: "100%" }}>
                         <CardContent>
@@ -65,14 +67,13 @@ const TeamInfo = ({ team, ctx }: TIProps) => {
                                 variant="overline"
                                 color="text.secondary"
                             >
-                                {/* TODO */}
                                 CURRENT RANKING (?QUERY)
                             </Typography>
                             <Typography variant="h5">{"TODO"}</Typography>
                         </CardContent>
                     </Card>
                 </Grid>
-            )}
+            ) */}
             <Grid item xs={2} sm={3} md={3} textAlign="center">
                 {ctx.edit && (
                     <Button
@@ -181,7 +182,7 @@ const TeamInfoPage = () => {
                 />
 
                 <Divider sx={{ mt: 2, mb: 1 }} />
-                {/*Team Table*/}
+                {/*Team player Table*/}
                 <Grid>
                     <Typography variant="h6">TODO</Typography>
                     <Button variant="outlined">Get Players</Button>
