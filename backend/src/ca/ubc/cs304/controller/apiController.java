@@ -18,13 +18,13 @@ public class apiController {
 
     // was previously in player...Controler
 //    @GetMapping("/players/TheLions")
-//    public PlayerHasRankingIsInTeamFollowsModel showStarPlayers() {
+//    public PlayerHasRankingIsInTeamFollowsModel showStarPlayer() {
 //        String teamName = "The Lions";
 //        return controller.showStarPlayer(teamName);
 //    }
     // TODO check controller.show...
     @GetMapping("/get-star-players/{teamName}")
-    public PlayerHasRankingIsInTeamFollowsModel getStarPlayers(@PathVariable("teamName") String teamName) {
+    public PlayerHasRankingIsInTeamFollowsModel getStarPlayer(@PathVariable("teamName") String teamName) {
 //        String teamName = "The Lions";
         return controller.showStarPlayer(teamName);
     }

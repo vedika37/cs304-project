@@ -523,8 +523,8 @@ public class DatabaseConnectionHandler {
     }
 
     // aggregation with group by query
-    public HashMap<String, Integer> showCountOfAllTeams() {
-        HashMap<String, Integer> result = new HashMap<>();
+    public ArrayList<PlayerCountTeamModel> showCountOfAllTeams() {
+        ArrayList<PlayerCountTeamModel> result = new ArrayList<>();
 //        int result = 999;
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS PlayerCount, teamName\n" +
@@ -536,8 +536,10 @@ public class DatabaseConnectionHandler {
 
 
             while (rs.next()) {
-                result.put(rs.getString(2), rs.getInt(1));
-//                System.out.println(rs.getString(2) + " " + rs.getInt(1));
+                PlayerCountTeamModel model = new PlayerCountTeamModel(rs.getInt("playerCount"),
+                        rs.getString("teamName"));
+                result.add(model);
+                System.out.println(rs.getString("teamName") + " " + rs.getInt("playerCount"));
             }
 
             rs.close();
@@ -550,6 +552,7 @@ public class DatabaseConnectionHandler {
         System.out.println(result);
         return result;
     }
+
 
     // aggregation with having query
     public ArrayList<String> getHighPerformingTeams() {
@@ -581,7 +584,6 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
-    // TODO is this supposed to return 1 player or a list??? inconsistent function naming so i cant tell, also the query below returns a list
     // nested aggregation query
     public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String givenTeamName) {
         PlayerHasRankingIsInTeamFollowsModel result = null;
@@ -590,7 +592,7 @@ public class DatabaseConnectionHandler {
 //            System.out.println(givenTeamName);
             PreparedStatement ps = connection.prepareStatement("SELECT P.playerID, P.name\n" +
                     "FROM playerHasRankingIsInTeamFollows P, displaysPerformance Pe\n" +
-                    "WHERE P.teamName LIKE ? AND P.playerID = Pe.playerID AND Pe.performancePoints = ( SELECT MAX (Pe2.performancePoints)\n" +
+                    "WHERE rownum = 1 AND P.teamName LIKE ? AND P.playerID = Pe.playerID AND Pe.performancePoints = ( SELECT MAX (Pe2.performancePoints)\n" +
                     "FROM playerHasRankingIsInTeamFollows P2, displaysPerformance Pe2\n" +
                     "WHERE P2.teamName LIKE ? AND P2.playerID = Pe2.playerID)");
             ps.setString(1, givenTeamName);

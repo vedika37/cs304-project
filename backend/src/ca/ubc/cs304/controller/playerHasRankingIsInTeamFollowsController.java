@@ -2,6 +2,7 @@ package ca.ubc.cs304.controller;
 
 
 import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
+import ca.ubc.cs304.model.PlayerCountTeamModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @RestController
 @CrossOrigin
@@ -34,16 +34,15 @@ public class playerHasRankingIsInTeamFollowsController {
         return controller.getRankingsBySeason(season);
     }
 
-    // TODO ???? what is this, you cant return a hashmap thru http
     @GetMapping("/playerCount")
-    public HashMap<String, Integer> showCountOfAllTeams() {
+    public ArrayList<PlayerCountTeamModel> showCountOfAllTeams() {
         return controller.showCountOfAllTeams();
     }
 
 
     // moved to apiController as it is more appropriate
 //    @GetMapping("/players/TheLions")
-//    public PlayerHasRankingIsInTeamFollowsModel showStarPlayers() {
+//    public PlayerHasRankingIsInTeamFollowsModel showStarPlayer() {
 //        String teamName = "The Lions";
 //         return controller.showStarPlayer(teamName);
 //    }

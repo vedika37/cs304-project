@@ -53,20 +53,28 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     // TODO SANITIZE INPUT HERE OR IN DBHANDLER
     // get coach by id
     public CoachModel getCoachByCoachID(String coachID) {
-        //System.out.println("controller call");
-        return dbHandler.getCoachByCoachID(coachID);
+        if (Pattern.matches("[a-zA-Z0-9]{1,20}", coachID)) {
+            return dbHandler.getCoachByCoachID(coachID);
+        }
+        return null;
     }
 
     // TODO SANITIZE INPUT HERE OR IN DBHANDLER
     // get player by id
     public PlayerHasRankingIsInTeamFollowsModel getPlayerByPlayerID(String playerID) {
-        return dbHandler.getPlayerByPlayerID(playerID);
+        if (Pattern.matches("[a-zA-Z0-9]{1,20}", playerID)) {
+            return dbHandler.getPlayerByPlayerID(playerID);
+        }
+        return null;
     }
 
     // TODO SANITIZE INPUT HERE OR IN DBHANDLER
     // get team by model
     public TeamModel getTeamByModel(String type, String name, String division) {
-        return dbHandler.getTeamByModel(type,name,division);
+        if ((Pattern.matches("[a-zA-Z]{1,20}", type) && (Pattern.matches("[a-zA-Z]{1,20}", name) && (Pattern.matches("[a-zA-Z]{1,20}", division)) {
+            return dbHandler.getTeamByModel(type,name,division);
+        }
+        return null;
     }
 
 
@@ -87,7 +95,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         return dbHandler.getPlayerInfo();
     }
 
-    public HashMap<String, Integer> showCountOfAllTeams() {
+    public ArrayList<PlayerCountTeamModel> showCountOfAllTeams() {
         return dbHandler.showCountOfAllTeams();
     }
 
@@ -95,7 +103,6 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         return dbHandler.getHighPerformingTeams();
     }
 
-    // TODO check dbhandler.show...
     public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String teamName) {
         return dbHandler.showStarPlayer(teamName);
     }

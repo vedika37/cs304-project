@@ -273,12 +273,6 @@ public class TerminalTransactions {
 	}
 
 	private void handleAggregationOption() {
-//        String givenTeamName = null;
-//        while (givenTeamName == null || givenTeamName.length() <= 0) {
-//            System.out.print("Please enter the team name to see how many players are in there: ");
-//            givenTeamName = readLine().trim();
-//        }
-
 		delegate.showCountOfAllTeams();
 	}
 	private void handleAggregationWithHavingOption() {
