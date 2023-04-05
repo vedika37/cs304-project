@@ -125,7 +125,8 @@ const SideBar = () => {
                         </ListItemButton>
                     </ListItem>
                 </Tooltip>
-                <Tooltip title="Injury History" placement="right" arrow>
+                {/* DEPRECATED!!! */}
+                {/* <Tooltip title="Injury History" placement="right" arrow>
                     <ListItem
                         key="injury-info"
                         disablePadding
@@ -141,7 +142,7 @@ const SideBar = () => {
                             />
                         </ListItemButton>
                     </ListItem>
-                </Tooltip>
+                </Tooltip> */}
                 <Tooltip title="Team Profiles" placement="right" arrow>
                     <ListItem
                         key="team-info"
@@ -159,7 +160,8 @@ const SideBar = () => {
                         </ListItemButton>
                     </ListItem>
                 </Tooltip>
-                <Tooltip title="Schedules" placement="right" arrow>
+                {/* DEPRECATED!!! */}
+                {/* <Tooltip title="Schedules" placement="right" arrow>
                     <ListItem
                         key="schedule-info"
                         disablePadding
@@ -177,10 +179,9 @@ const SideBar = () => {
                             />
                         </ListItemButton>
                     </ListItem>
-                </Tooltip>
-                {/*
-                // deprecated 
-                <ListItem
+                </Tooltip> */}
+                {/* DEPRECATED!!! */}
+                {/* <ListItem
                     key="game-info"
                     disablePadding
                     sx={{ display: "block" }}

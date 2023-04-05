@@ -7,7 +7,7 @@ import Page404 from "./pages/Page404";
 import PlayerInfoPage from "./pages/PlayerInfoPage";
 import ScheduleInfoPage from "./pages/ScheduleInfoPage";
 import TeamInfoPage from "./pages/TeamInfoPage";
-import GameInfoPage from "./pages/GameInfoPage";
+// import GameInfoPage from "./pages/GameInfoPage";
 import CoachInfoPage from "./pages/CoachInfoPage";
 import RankingInfoPage from "./pages/RankingInfoPage";
 
@@ -29,19 +29,21 @@ export default function AppRouter() {
                     path: "coach-info",
                     element: <CoachInfoPage />,
                 },
-                {
-                    path: "injury-info",
-                    element: <InjuryInfoPage />,
-                },
+                // DEPRECATED!!!
+                // {
+                //     path: "injury-info",
+                //     element: <InjuryInfoPage />,
+                // },
                 {
                     path: "team-info",
                     element: <TeamInfoPage />,
                 },
-                {
-                    path: "schedule-info",
-                    element: <ScheduleInfoPage />,
-                },
-                // deprecated
+                // DEPRECATED!!!
+                // {
+                //     path: "schedule-info",
+                //     element: <ScheduleInfoPage />,
+                // },
+                // DEPRECATED!!!
                 // {
                 //     path: "game-info",
                 //     element: <GameInfoPage />,

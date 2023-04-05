@@ -103,10 +103,12 @@ const MainPage = () => {
             const res = await fetch(createRoute("api/best-performing-team"));
 
             // res handling goes here TODO
-
-            const data: Team = await res.json();
-            // console.log(data);
-            setTopTeam(data);
+            if (res.status === 200) {
+                const data: Team = await res.json();
+                setTopTeam(data);
+            } else {
+                //display something went wrong message
+            }
         } catch (e) {}
     };
 
@@ -117,13 +119,12 @@ const MainPage = () => {
             const res = await fetch(createRoute("api/high-performing-teams"));
 
             // TODO res status/error handling
-            // if (res.status === 200)
-
-            const data: string[] = await res.json();
-
-            // console.log("DATA:", data);
-
-            setTopTeams(data);
+            if (res.status === 200) {
+                const data: string[] = await res.json();
+                setTopTeams(data);
+            } else {
+                //display something went wrong message
+            }
         } catch (e) {}
     };
 
