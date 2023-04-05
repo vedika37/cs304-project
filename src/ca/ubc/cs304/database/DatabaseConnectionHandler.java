@@ -24,7 +24,7 @@ public class DatabaseConnectionHandler {
     // Use this version of the ORACLE_URL if you are running the code off of the server
 //    private static final String ORACLE_URL = "jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu";
     // Use this version of the ORACLE_URL if you are tunneling into the undergrad servers
-  private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
+    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
 
@@ -109,7 +109,7 @@ public class DatabaseConnectionHandler {
 
 
     // delete query
-    public void deleteCoach(String coachID) {
+    public String deleteCoach(String coachID) {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM coach WHERE coachID = ?");
             ps.setString(1, coachID);
@@ -122,9 +122,33 @@ public class DatabaseConnectionHandler {
             connection.commit();
 
             ps.close();
+            return "Deleted!";
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
+            return (EXCEPTION_TAG + " " + e.getMessage());
+        }
+    }
+
+    // delete on cascade query
+    public String deleteSpecialization(String specialization) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM Specialization WHERE Specialization = ?");
+            ps.setString(1, specialization);
+
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(WARNING_TAG + " Specialization " + specialization + " does not exist!");
+            }
+
+            connection.commit();
+
+            ps.close();
+            return "Deleted!";
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+            return (EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
@@ -142,6 +166,8 @@ public class DatabaseConnectionHandler {
             connection.commit();
 
             ps.close();
+
+            return "Success! Coach added!";
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -174,11 +200,15 @@ public class DatabaseConnectionHandler {
         return result.toArray(new CoachModel[result.size()]);
     }
     // update query
-    public void updateCoach(String coachID, String name) {
+    public String updateCoach(String coachID, String name, String phoneNumber, String specialization) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE coach SET name = ? WHERE coachID = ?");
-            ps.setString(1, name);
-            ps.setString(2, coachID);
+            PreparedStatement ps = connection.prepareStatement("UPDATE coach " +
+                    "SET coachID = ?, name = ?, phoneNumber = ?, specialization = ?  WHERE coachID = ?");
+            ps.setString(1, coachID);
+            ps.setString(2, name);
+            ps.setString(3, phoneNumber);
+            ps.setString(4, specialization);
+            ps.setString(5, coachID);
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
@@ -188,6 +218,7 @@ public class DatabaseConnectionHandler {
             connection.commit();
 
             ps.close();
+            return "Success! Coach updated!";
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -229,7 +260,7 @@ public class DatabaseConnectionHandler {
     }
 
     // selection projection join query
-    public ArrayList<SportsScheduleModel> showAllSchedulesMadeByCoach(String coachID) {
+    public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID) {
         ArrayList<SportsScheduleModel> result = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT S.scheduleID, S.startTime, S.endTime, s.season\n" +
@@ -257,11 +288,48 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
+        System.out.println(result.toArray(new SportsScheduleModel[result.size()]));
+        return result.toArray(new SportsScheduleModel[result.size()]);
+    }
+
+    // division query
+    public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(String givenTeamName) {
+        ArrayList<CoachModel> result = new ArrayList<CoachModel>();
+
+        try {
+            System.out.println(givenTeamName);
+            PreparedStatement ps = connection.prepareStatement("SELECT C.coachID, C.name\n" +
+                    "   FROM Coach C\n" +
+                    "   WHERE NOT EXISTS (SELECT P.name\n" +
+                    "   FROM playerHasRankingIsInTeamFollows P\n" +
+                    "   WHERE P.teamName = ? AND NOT EXISTS (SELECT *\n" +
+                    "   FROM Trains T\n" +
+                    "   WHERE C.coachID = T.coachID AND T.playerID = P.playerID))");
+            ps.setString(1, givenTeamName);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                CoachModel model = new CoachModel(rs.getString("coachID"),
+                        rs.getString("name"),
+                        null,
+                        null
+                );
+
+                result.add(model);
+//                System.out.println(result);
+                System.out.println(model.getName() );
+            }
+
+            rs.close();
+            ps.close();
+            connection.commit();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
 
         return result;
     }
 
-    // division query
     public ArrayList<PlayerHasRankingIsInTeamFollowsModel> showAllPlayersAndRanksInTeam(String givenTeamName) {
         ArrayList<PlayerHasRankingIsInTeamFollowsModel> result = new ArrayList<PlayerHasRankingIsInTeamFollowsModel>();
 
@@ -281,11 +349,11 @@ public class DatabaseConnectionHandler {
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                PlayerHasRankingIsInTeamFollowsModel model = new PlayerHasRankingIsInTeamFollowsModel(rs.getString("playerID"),
+                PlayerHasRankingIsInTeamFollowsModel model = new PlayerHasRankingIsInTeamFollowsModel(null,
                         rs.getString("name"),
-                        rs.getString("position"),
-                        rs.getInt("playerNumber"),
-                        rs.getString("phoneNumber"),
+                        null,
+                        -1,
+                        null,
                         rs.getInt("rankNumber"),
                         null,
                         null,
@@ -418,8 +486,21 @@ public class DatabaseConnectionHandler {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-                result = (rs.getString(1));
-                System.out.println(rs.getString(1));
+                PlayerHasRankingIsInTeamFollowsModel model = new PlayerHasRankingIsInTeamFollowsModel(rs.getString("playerID"),
+                        rs.getString("name"),
+                        null,
+                        -1,
+                        null,
+                        -1,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                );
+
+                result = model;
+                System.out.println(result.getName());
             }
 
             rs.close();

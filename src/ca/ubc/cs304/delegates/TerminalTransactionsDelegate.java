@@ -20,8 +20,11 @@ import java.util.HashMap;
 public interface TerminalTransactionsDelegate {
 	public void databaseSetup();
 
-	public void deleteCoach(String coachID);
-	public void insertCoach(CoachModel model);
+	public String deleteCoach(String coachID);
+
+    public String deleteSpecialization(String specialization);
+
+	public String insertCoach(CoachModel model);
 	public void showCoach();
 	public String updateCoach(String coachID, String name, String phoneNumber, String specialization);
 	public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID);

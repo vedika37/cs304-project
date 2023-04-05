@@ -129,6 +129,9 @@ public class TerminalTransactions {
 					case 14:
 						handleDeleteOnCascadeOption();
 						break;
+                    case 15:
+                        handleQuitOption();
+                        break;
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
 						break;
@@ -218,7 +221,7 @@ public class TerminalTransactions {
 		String coachID = null;
 		while (coachID == null || coachID.length() <= 0) {
 			System.out.print("Please enter the coach ID you wish to update: ");
-			coachID = readLine().trim();
+            coachID = readLine().trim();
 		}
 
 		String name = null;
@@ -227,7 +230,18 @@ public class TerminalTransactions {
 			name = readLine().trim();
 		}
 
-		delegate.updateCoach(coachID, name);
+        String phoneNumber = null;
+        while (phoneNumber == null || phoneNumber.length() <= 0) {
+            System.out.print("Please enter the coach phone number you wish to update: ");
+            phoneNumber = readLine().trim();
+        }
+
+        String specialization = null;
+        while (specialization == null || specialization.length() <= 0) {
+            System.out.print("Please enter the coach specialization you wish to update: ");
+            specialization = readLine().trim();
+        }
+		delegate.updateCoach(coachID, name, phoneNumber, specialization);
 	}
 
 	private void handleProjectionOption() {
