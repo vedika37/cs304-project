@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import ViewContext from "../context/ViewContext";
 import { createRoute } from "../shared/proxy";
+import ScheduleTable from "../components/ScheduleTable";
 
 interface CIProps {
     coach: Coach | null;
@@ -93,8 +94,9 @@ const CoachInfoPage = () => {
     };
 
     const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
-
     const [options, setOptions] = useState<CoachOption[]>([]);
+    const [showSchdules, setShowSchedules] = useState<boolean>(false);
+    const [scheduleData, setScheduleData] = useState<Coach[]>([]);
 
     const fetchOptions = async () => {
         // todo error handling
@@ -135,11 +137,31 @@ const CoachInfoPage = () => {
             const data: Coach = await res.json();
 
             setSelectedCoach(data);
+            displaySchedules(false);
         } catch (e) {
             console.log(e);
         }
 
         // setSelectedCoach(newValue);
+    };
+
+    const displaySchedules = async (show: boolean) => {
+        // console.log("displaying schedules", showSchdules);
+        if (selectedCoach) {
+            try {
+                const res = await fetch(
+                    createRoute(`sportsSchedule/${selectedCoach.coachID}`)
+                );
+
+                // res handling
+
+                const data = await res.json();
+                // console.log(data);
+                setScheduleData(data);
+
+                setShowSchedules(show);
+            } catch (e) {}
+        }
     };
 
     return (
@@ -187,9 +209,16 @@ const CoachInfoPage = () => {
                 <Divider sx={{ mt: 2, mb: 1 }} />
                 {/*Coach Table*/}
                 <Grid>
-                    <Typography variant="h6">TODO</Typography>
-                    <Button variant="outlined">Display Schedules</Button>
+                    {/* <Typography variant="h6">TODO</Typography> */}
+                    <Button
+                        variant="outlined"
+                        onClick={() => displaySchedules(true)}
+                    >
+                        Display Schedules
+                    </Button>
                 </Grid>
+                <Divider sx={{ mt: 1, mb: 1 }} />
+                {showSchdules && <ScheduleTable data={scheduleData} />}
             </Box>
         </div>
     );

@@ -581,6 +581,7 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
+    // TODO is this supposed to return 1 player or a list??? inconsistent function naming so i cant tell, also the query below returns a list
     // nested aggregation query
     public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String givenTeamName) {
         PlayerHasRankingIsInTeamFollowsModel result = null;

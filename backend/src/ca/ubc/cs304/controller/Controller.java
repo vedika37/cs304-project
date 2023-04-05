@@ -95,6 +95,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         return dbHandler.getHighPerformingTeams();
     }
 
+    // TODO check dbhandler.show...
     public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String teamName) {
         return dbHandler.showStarPlayer(teamName);
     }

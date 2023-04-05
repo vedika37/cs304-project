@@ -34,7 +34,7 @@ public class playerHasRankingIsInTeamFollowsController {
         return controller.getRankingsBySeason(season);
     }
 
-    // TODO ???? what is this?
+    // TODO ???? what is this, you cant return a hashmap thru http
     @GetMapping("/playerCount")
     public HashMap<String, Integer> showCountOfAllTeams() {
         return controller.showCountOfAllTeams();

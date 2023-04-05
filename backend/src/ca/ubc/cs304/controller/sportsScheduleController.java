@@ -14,6 +14,7 @@ public class sportsScheduleController {
     @Autowired
     private Controller controller;
 
+    //this url is incorrect for what it does (NOT RESTful) but works for now
     @GetMapping("/sportsSchedule/{coachID}")
     public SportsScheduleModel[] getAllSchedulesMadeByCoach(@PathVariable("coachID") String coachID) {
         return controller.getAllSchedulesMadeByCoach(coachID);
