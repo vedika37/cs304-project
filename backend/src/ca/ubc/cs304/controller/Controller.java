@@ -3,11 +3,8 @@ package ca.ubc.cs304.controller;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-import ca.ubc.cs304.model.CoachModel;
+import ca.ubc.cs304.model.*;
 //import ca.ubc.cs304.model.CoachOptionModel;
-import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
-import ca.ubc.cs304.model.SportsScheduleModel;
-import ca.ubc.cs304.model.TeamModel;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
 
@@ -39,9 +36,24 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     //utility///////////////////////////////////////////////////////////////
     //OPTIONS
     //coach options
-//    public CoachOptionModel[] getCoachOptions() {
-//        return dbHandler.getCoachOptions();
-//    }
+    public CoachOptionModel[] getCoachOptions() {
+        return dbHandler.getCoachOptions();
+    }
+    // player options
+    public PlayerOptionModel[] getPlayerOptions() {
+        return dbHandler.getPlayerOptions();
+    }
+    //team options
+    public TeamOptionModel[] getTeamOptions() {
+        return dbHandler.getTeamOptions();
+    }
+
+    ///////////////////////////////////////////////////////////////utility//
+
+
+
+
+
 
     public CoachModel[] getCoaches() {
         return dbHandler.getCoachInfo();

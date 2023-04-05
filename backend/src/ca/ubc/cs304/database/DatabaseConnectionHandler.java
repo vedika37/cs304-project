@@ -9,11 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ca.ubc.cs304.model.CoachModel;
+import ca.ubc.cs304.model.*;
 //import ca.ubc.cs304.model.CoachOptionModel;
-import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
-import ca.ubc.cs304.model.SportsScheduleModel;
-import ca.ubc.cs304.model.TeamModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -54,33 +51,77 @@ public class DatabaseConnectionHandler {
     //utility///////////////////////////////////////////////////////////////
     //OPTIONS
     //coach options
-//    public CoachOptionModel[] getCoachOptions() {
-//        ArrayList<CoachOptionModel> result = new ArrayList<CoachOptionModel>();
-//
-//        try {
-//            Statement stmt = connection.createStatement();
-//            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
-//
-//            while(rs.next()) {
-//                CoachOptionModel model = new CoachOptionModel(rs.getString("coachID"),
-//                        rs.getString("name"));
-//                result.add(model);
-//            }
-//
-//            rs.close();
-//            stmt.close();
-//        } catch (SQLException e) {
-//            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//        }
-//
-//        return result.toArray(new CoachOptionModel[result.size()]);
-//    }
+    public CoachOptionModel[] getCoachOptions() {
+        ArrayList<CoachOptionModel> result = new ArrayList<CoachOptionModel>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
+
+            while(rs.next()) {
+                CoachOptionModel model = new CoachOptionModel(rs.getString("coachID"),
+                        rs.getString("name"));
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new CoachOptionModel[result.size()]);
+    }
+    //player options
+    public PlayerOptionModel[] getPlayerOptions() {
+        ArrayList<PlayerOptionModel> result = new ArrayList<PlayerOptionModel>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
+
+            while(rs.next()) {
+                PlayerOptionModel model = new PlayerOptionModel(rs.getString("playerID"),
+                        rs.getString("name"));
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new PlayerOptionModel[result.size()]);
+    }
+    //team options
+    public TeamOptionModel[] getTeamOptions() {
+        ArrayList<TeamOptionModel> result = new ArrayList<TeamOptionModel>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
+
+            while(rs.next()) {
+                TeamOptionModel model = new TeamOptionModel(rs.getString("type"),
+                        rs.getString("name"), rs.getString("division"));
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new TeamOptionModel[result.size()]);
+    }
     ///////////////////////////////////////////////////////////////utility//
 
     // get coach by coachID query
     public CoachModel getCoachByCoachID(String coachID) {
         CoachModel result = null;
-        System.out.println("dbhandler call");
+//        System.out.println("dbhandler call"); //this was for debugging
 
         try {
             Statement stmt = connection.createStatement();
