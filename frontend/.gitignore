@@ -25,6 +25,3 @@ dist-ssr
 
 # env vars
 .env
-
-# misc for testing/dev
-db.json
