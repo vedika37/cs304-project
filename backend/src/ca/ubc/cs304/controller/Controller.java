@@ -10,6 +10,7 @@ import ca.ubc.cs304.ui.TerminalTransactions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * This is the main controller class that will orchestrate everything.
