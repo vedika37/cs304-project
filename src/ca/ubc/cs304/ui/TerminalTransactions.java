@@ -62,7 +62,7 @@ public class TerminalTransactions {
 		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		int choice = INVALID_INPUT;
 
-		while (choice != 13) {
+		while (choice != 15) {
 			System.out.println();
 			System.out.println("1. Insert coach");
 			System.out.println("2. Delete coach");
@@ -76,8 +76,10 @@ public class TerminalTransactions {
 			System.out.println("10. Show the high performing teams");
 			System.out.println("11. Show the highest performing player in a team");
 			System.out.println("12. Show the highest performing team");
-			System.out.println("13. Quit");
-			System.out.print("Please choose one of the above 13 options: ");
+            System.out.println("13. Show the coaches that have coached all players in a given team");
+            System.out.println("14. Delete specialization");
+			System.out.println("15. Quit");
+			System.out.print("Please choose one of the above 14 options: ");
 
 			choice = readInteger(false);
 
@@ -121,8 +123,11 @@ public class TerminalTransactions {
 					case 12:
 						handleNestedAggregationOption();
 						break;
-					case 13:
-						handleQuitOption();
+                    case 13:
+                        handleCoachDivsion();
+                        break;
+					case 14:
+						handleDeleteOnCascadeOption();
 						break;
 					default:
 						System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
@@ -132,7 +137,8 @@ public class TerminalTransactions {
 		}
 	}
 
-	private void handleDeleteOption() {
+
+    private void handleDeleteOption() {
 		String coachID = null;
 		while (coachID == null || coachID.length() <= 0) {
 			System.out.print("Please enter the coach ID you wish to delete: ");
@@ -142,6 +148,17 @@ public class TerminalTransactions {
 //			}
 		}
 	}
+
+    private void handleDeleteOnCascadeOption() {
+        String specialization = null;
+        while (specialization == null || specialization.length() <= 0) {
+            System.out.print("Please enter the specialization you wish to delete: ");
+            specialization = readLine().trim();
+//            if (coachID != INVALID_INPUT) {
+            delegate.deleteSpecialization(specialization);
+//			}
+        }
+    }
 
 	private void handleInsertOption() {
 		String coachID = null;
@@ -266,6 +283,15 @@ public class TerminalTransactions {
 	private void handleNestedAggregationOption() {
 		delegate.showBestPerformingTeam();
 	}
+
+    private void handleCoachDivsion() {
+        String teamName = null;
+        while (teamName == null || teamName.length() <= 0) {
+            System.out.print("Please enter the name of the team you wish to check the players for: ");
+            teamName = readLine().trim();
+        }
+        delegate.coachedAllPlayersInGivenTeam(teamName);
+    }
 	private int readInteger(boolean allowEmpty) {
 		String line = null;
 		int input = INVALID_INPUT;
