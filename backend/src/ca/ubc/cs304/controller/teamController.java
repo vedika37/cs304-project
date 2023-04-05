@@ -1,9 +1,11 @@
 package ca.ubc.cs304.controller;
 
+import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
 import ca.ubc.cs304.model.TeamModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -14,13 +16,26 @@ public class teamController {
     @Autowired
     private Controller controller;
 
-    @GetMapping("/team")
-    public ArrayList<String> highPerformingTeams() {
-        return controller.showHighPerformingTeams();
+
+//    moved to apiController
+//    @GetMapping("/high-performing-teams")
+//    public ArrayList<String> getHighPerformingTeams() {
+//        return controller.showHighPerformingTeams();
+//    }
+
+    // this is not restful
+    @GetMapping("team?type={type}&name={name}&division={division}")
+    public TeamModel getTeamByModel(@PathVariable("type") String type,
+                                    @PathVariable("name") String name,
+                                    @PathVariable("division") String division) {
+        return controller.getTeamByModel(type, name, division);
     }
 
-    @GetMapping("/team/best")
-    public TeamModel bestPerformingTeam() {
-        return controller.showBestPerformingTeam();
-    }
+    //    moved to apiController
+//    @GetMapping("best-performing-team")
+//    public TeamModel getBestPerformingTeam() {
+//        return controller.showBestPerformingTeam();
+//    }
+
+
 }

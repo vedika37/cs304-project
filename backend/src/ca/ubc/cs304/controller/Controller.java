@@ -3,11 +3,8 @@ package ca.ubc.cs304.controller;
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
-import ca.ubc.cs304.model.CoachModel;
+import ca.ubc.cs304.model.*;
 //import ca.ubc.cs304.model.CoachOptionModel;
-import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
-import ca.ubc.cs304.model.SportsScheduleModel;
-import ca.ubc.cs304.model.TeamModel;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
 
@@ -39,22 +36,51 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     //utility///////////////////////////////////////////////////////////////
     //OPTIONS
     //coach options
-//    public CoachOptionModel[] getCoachOptions() {
-//        return dbHandler.getCoachOptions();
-//    }
-
-    public CoachModel[] getCoaches() {
-        return dbHandler.getCoachInfo();
+    public CoachOptionModel[] getCoachOptions() {
+        return dbHandler.getCoachOptions();
+    }
+    // player options
+    public PlayerOptionModel[] getPlayerOptions() {
+        return dbHandler.getPlayerOptions();
+    }
+    //team options
+    public TeamOptionModel[] getTeamOptions() {
+        return dbHandler.getTeamOptions();
     }
 
+    ///////////////////////////////////////////////////////////////utility//
+
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
     // get coach by id
     public CoachModel getCoachByCoachID(String coachID) {
         //System.out.println("controller call");
         return dbHandler.getCoachByCoachID(coachID);
     }
 
-    public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID) {
-       return dbHandler.showAllSchedulesMadeByCoach(coachID);
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
+    // get player by id
+    public PlayerHasRankingIsInTeamFollowsModel getPlayerByPlayerID(String playerID) {
+        return dbHandler.getPlayerByPlayerID(playerID);
+    }
+
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
+    // get team by model
+    public TeamModel getTeamByModel(String type, String name, String division) {
+        return dbHandler.getTeamByModel(type,name,division);
+    }
+
+
+
+
+
+
+    public CoachModel[] getCoaches() {
+        return dbHandler.getCoachInfo();
+    }
+
+
+    public SportsScheduleModel[] getAllSchedulesMadeByCoach(String coachID) {
+       return dbHandler.getAllSchedulesMadeByCoach(coachID);
     }
 
     public PlayerHasRankingIsInTeamFollowsModel[] getPlayers(){
@@ -65,20 +91,21 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         return dbHandler.showCountOfAllTeams();
     }
 
-    public ArrayList<String> showHighPerformingTeams() {
-        return dbHandler.showHighPerformingTeams();
+    public ArrayList<String> getHighPerformingTeams() {
+        return dbHandler.getHighPerformingTeams();
     }
 
+    // TODO check dbhandler.show...
     public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String teamName) {
         return dbHandler.showStarPlayer(teamName);
     }
 
-    public TeamModel showBestPerformingTeam() {
-        return dbHandler.showBestPerformingTeam();
+    public TeamModel getBestPerformingTeam() {
+        return dbHandler.getBestPerformingTeam();
     }
 
-    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(String season){
-        return dbHandler.rankBySeason(season);
+    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> getRankingsBySeason(String season){
+        return dbHandler.getRankingsBySeason(season);
     }
     public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(String teamName) {
         return dbHandler.coachedAllPlayersInGivenTeam(teamName);

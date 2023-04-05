@@ -9,11 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ca.ubc.cs304.model.CoachModel;
+import ca.ubc.cs304.model.*;
 //import ca.ubc.cs304.model.CoachOptionModel;
-import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
-import ca.ubc.cs304.model.SportsScheduleModel;
-import ca.ubc.cs304.model.TeamModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -54,33 +51,78 @@ public class DatabaseConnectionHandler {
     //utility///////////////////////////////////////////////////////////////
     //OPTIONS
     //coach options
-//    public CoachOptionModel[] getCoachOptions() {
-//        ArrayList<CoachOptionModel> result = new ArrayList<CoachOptionModel>();
-//
-//        try {
-//            Statement stmt = connection.createStatement();
-//            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
-//
-//            while(rs.next()) {
-//                CoachOptionModel model = new CoachOptionModel(rs.getString("coachID"),
-//                        rs.getString("name"));
-//                result.add(model);
-//            }
-//
-//            rs.close();
-//            stmt.close();
-//        } catch (SQLException e) {
-//            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-//        }
-//
-//        return result.toArray(new CoachOptionModel[result.size()]);
-//    }
+    public CoachOptionModel[] getCoachOptions() {
+        ArrayList<CoachOptionModel> result = new ArrayList<CoachOptionModel>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
+
+            while(rs.next()) {
+                CoachOptionModel model = new CoachOptionModel(rs.getString("coachID"),
+                        rs.getString("name"));
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new CoachOptionModel[result.size()]);
+    }
+    //player options
+    public PlayerOptionModel[] getPlayerOptions() {
+        ArrayList<PlayerOptionModel> result = new ArrayList<PlayerOptionModel>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT PLAYERID,NAME FROM PLAYERHASRANKINGISINTEAMFOLLOWS");
+
+            while(rs.next()) {
+                PlayerOptionModel model = new PlayerOptionModel(rs.getString("playerID"),
+                        rs.getString("name"));
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new PlayerOptionModel[result.size()]);
+    }
+    //team options
+    public TeamOptionModel[] getTeamOptions() {
+        ArrayList<TeamOptionModel> result = new ArrayList<TeamOptionModel>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT TYPE, NAME, DIVISION FROM TEAM");
+
+            while(rs.next()) {
+                TeamOptionModel model = new TeamOptionModel(rs.getString("type"),
+                        rs.getString("name"), rs.getString("division"));
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new TeamOptionModel[result.size()]);
+    }
     ///////////////////////////////////////////////////////////////utility//
 
+    // TODO SANITIZE INPUT
     // get coach by coachID query
     public CoachModel getCoachByCoachID(String coachID) {
         CoachModel result = null;
-        System.out.println("dbhandler call");
+//        System.out.println("dbhandler call"); //this was for debugging
 
         try {
             Statement stmt = connection.createStatement();
@@ -94,6 +136,74 @@ public class DatabaseConnectionHandler {
                         rs.getString("name"),
                         rs.getString("phoneNumber"),
                         rs.getString("specialization"));
+
+                result = model;
+            }
+
+            rs.close();
+            stmt.close();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    // TODO SANITIZE INPUT
+    //get player by playerID query
+    public PlayerHasRankingIsInTeamFollowsModel getPlayerByPlayerID(String playerID) {
+        PlayerHasRankingIsInTeamFollowsModel result = null;
+//        System.out.println("dbhandler call"); //this was for debugging
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM PLAYERHASRANKINGISINTEAMFOLLOWS WHERE PLAYERID = '"+playerID+"'");
+
+
+            // should only return 1 item as primary key
+
+            while(rs.next()) {
+                PlayerHasRankingIsInTeamFollowsModel model = new PlayerHasRankingIsInTeamFollowsModel(rs.getString("playerID"),
+                        rs.getString("name"),
+                        rs.getString("position"),
+                        rs.getInt("playerNumber"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("rankNumber"),
+                        rs.getString("rankType"),
+                        rs.getString("teamType"),
+                        rs.getString("teamName"),
+                        rs.getString("division"),
+                        rs.getString("scheduleID"));
+
+                result = model;
+            }
+
+            rs.close();
+            stmt.close();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    // TODO SANITIZE INPUT
+    // get coach by coachID query
+    public TeamModel getTeamByModel(String type, String name, String division) {
+        TeamModel result = null;
+//        System.out.println("dbhandler call"); //this was for debugging
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM TEAM WHERE (TYPE = '"+type+"' AND NAME = '"+name+"' AND DIVISION = '"+division+"'");
+
+
+            // should only return 1 item as are primary key
+
+            while(rs.next()) {
+                TeamModel model = new TeamModel(rs.getString("type"),
+                        rs.getString("name"),
+                        rs.getString("division"));
 
                 result = model;
             }
@@ -226,8 +336,9 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    // TODO performace points?? also need to add custom obj to frontend to display
     // projection query order by rank
-    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(String givenSeason) {
+    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> getRankingsBySeason(String givenSeason) {
         ArrayList<PlayerHasRankingIsInTeamFollowsModel> result = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT P.PlayerID, P.name, P.rankNumber, P.teamName\n" +
@@ -260,7 +371,7 @@ public class DatabaseConnectionHandler {
     }
 
     // selection projection join query
-    public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID) {
+    public SportsScheduleModel[] getAllSchedulesMadeByCoach(String coachID) {
         ArrayList<SportsScheduleModel> result = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT S.scheduleID, S.startTime, S.endTime, s.season\n" +
@@ -441,7 +552,7 @@ public class DatabaseConnectionHandler {
     }
 
     // aggregation with having query
-    public ArrayList<String> showHighPerformingTeams() {
+    public ArrayList<String> getHighPerformingTeams() {
         ArrayList<String> result = new ArrayList<>();
 //        int result = 999;
         try {
@@ -470,6 +581,7 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
+    // TODO is this supposed to return 1 player or a list??? inconsistent function naming so i cant tell, also the query below returns a list
     // nested aggregation query
     public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String givenTeamName) {
         PlayerHasRankingIsInTeamFollowsModel result = null;
@@ -514,10 +626,19 @@ public class DatabaseConnectionHandler {
     }
 
     // nested aggregation with group by
-    public TeamModel showBestPerformingTeam() {
+    public TeamModel getBestPerformingTeam() {
         TeamModel result = null;
 
         try {
+//            alternative
+//            SELECT t.TYPE,TEAMNAME,t.DIVISION, AVG(Pe.performancePoints)
+//            FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe
+//            WHERE  P.teamName = T.name AND P.playerID = Pe.playerID
+//            GROUP BY t.TYPE, TEAMNAME, t.DIVISION
+//            HAVING avg(Pe.performancePoints) >= all (SELECT AVG(Pe.performancePoints)
+//                    FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe
+//                    WHERE  P.teamName = T.name AND P.playerID = Pe.playerID
+//                    GROUP BY teamName)
 //            System.out.println(givenTeamName);
             PreparedStatement ps = connection.prepareStatement("SELECT teamName, AVG(Pe.performancePoints)\n" +
                     "    FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe\n" +

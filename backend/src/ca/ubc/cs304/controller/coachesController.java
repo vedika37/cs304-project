@@ -27,7 +27,7 @@ public class coachesController {
 
     @GetMapping("/coaches/{id}")
     public CoachModel getCoachByCoachID(@PathVariable("id") String coachID) {
-        System.out.println(coachID);
+//        System.out.println(coachID); //this was for debugging
         return controller.getCoachByCoachID(coachID);
     }
 
