@@ -4,6 +4,7 @@ import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.model.CoachModel;
+//import ca.ubc.cs304.model.CoachOptionModel;
 import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
 import ca.ubc.cs304.model.SportsScheduleModel;
 import ca.ubc.cs304.model.TeamModel;
@@ -141,8 +142,8 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
      * <p>
      * Delete branch with given branch ID.
      */
-    public void deleteCoach(String coachID) {
-        dbHandler.deleteCoach(coachID);
+    public String deleteCoach(String coachID) {
+        return dbHandler.deleteCoach(coachID);
     }
 
     public String deleteSpecialization(String specialization) {
