@@ -24,20 +24,25 @@ public class playerHasRankingIsInTeamFollowsController {
         return controller.getPlayers();
     }
 
-    @GetMapping("/players/{season}")
-    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(@PathVariable("season") String season) {
-        return controller.rankBySeason(season);
+    @GetMapping("players/{playerID}")
+    public PlayerHasRankingIsInTeamFollowsModel getPlayerByPlayerID(@PathVariable("playerID") String playerID) {
+        return controller.getPlayerByPlayerID(playerID);
     }
 
-    @GetMapping("/playerCount")
-    public HashMap<String, Integer> showCountOfAllTeams() {
-        return controller.showCountOfAllTeams();
-    }
-
-    @GetMapping("/players/TheLions")
-    public PlayerHasRankingIsInTeamFollowsModel showStarPlayers() {
-        String teamName = "The Lions";
-         return controller.showStarPlayer(teamName);
-    }
+//    @GetMapping("/players/{season}")
+//    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(@PathVariable("season") String season) {
+//        return controller.rankBySeason(season);
+//    }
+//
+//    @GetMapping("/playerCount")
+//    public HashMap<String, Integer> showCountOfAllTeams() {
+//        return controller.showCountOfAllTeams();
+//    }
+//
+//    @GetMapping("/players/TheLions")
+//    public PlayerHasRankingIsInTeamFollowsModel showStarPlayers() {
+//        String teamName = "The Lions";
+//         return controller.showStarPlayer(teamName);
+//    }
 
 }

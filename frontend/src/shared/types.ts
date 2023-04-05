@@ -58,6 +58,23 @@ export type Team = typeof TeamObj;
 
 export type Player = typeof PlayerObj;
 
+export interface CoachOption {
+    coachID: string;
+    name: string;
+}
+
+export interface TeamOption {
+    type: string;
+    name: string;
+    division: string;
+}
+
+export interface PlayerOption {
+    playerID: string;
+    name: string;
+}
+
+////////////////////////////////////////////
 export type User = Player | Coach;
 
 export interface UserContextType {
@@ -65,6 +82,7 @@ export interface UserContextType {
     user: User | null;
     authLogin: (authUserID: string) => void;
 }
+/////////////////////////////////////////////
 
 export interface Season {
     season: string;

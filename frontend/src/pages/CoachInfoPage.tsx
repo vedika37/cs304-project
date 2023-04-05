@@ -6,6 +6,7 @@ import {
     View,
     Coach,
     CoachObj,
+    CoachOption,
 } from "../shared/types";
 import {
     Autocomplete,
@@ -93,7 +94,7 @@ const CoachInfoPage = () => {
 
     const [selectedCoach, setSelectedCoach] = useState<Coach | null>(null);
 
-    const [options, setOptions] = useState<Coach[]>([]);
+    const [options, setOptions] = useState<CoachOption[]>([]);
 
     const fetchOptions = async () => {
         // todo error handling
@@ -115,10 +116,30 @@ const CoachInfoPage = () => {
         fetchOptions();
     }, []);
 
-    const handleSelectedChange = async (e: any, newValue: Coach | null) => {
-        // TODO run SELECT query for new value to pull most recent data
+    const handleSelectedChange = async (
+        e: any,
+        newValue: CoachOption | null
+    ) => {
+        // console.log(newValue);
 
-        setSelectedCoach(newValue);
+        if (!newValue) {
+            setSelectedCoach(null);
+            return;
+        }
+
+        try {
+            const res = await fetch(
+                createRoute(`coaches/${newValue?.coachID}`)
+            );
+
+            const data: Coach = await res.json();
+
+            setSelectedCoach(data);
+        } catch (e) {
+            console.log(e);
+        }
+
+        // setSelectedCoach(newValue);
     };
 
     return (

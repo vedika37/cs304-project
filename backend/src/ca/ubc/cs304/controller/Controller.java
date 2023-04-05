@@ -50,6 +50,25 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
 
     ///////////////////////////////////////////////////////////////utility//
 
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
+    // get coach by id
+    public CoachModel getCoachByCoachID(String coachID) {
+        //System.out.println("controller call");
+        return dbHandler.getCoachByCoachID(coachID);
+    }
+
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
+    // get player by id
+    public PlayerHasRankingIsInTeamFollowsModel getPlayerByPlayerID(String playerID) {
+        return dbHandler.getPlayerByPlayerID(playerID);
+    }
+
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
+    // get team by model
+    public TeamModel getTeamByModel(String type, String name, String division) {
+        return dbHandler.getTeamByModel(type,name,division);
+    }
+
 
 
 
@@ -59,11 +78,6 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         return dbHandler.getCoachInfo();
     }
 
-    // get coach by id
-    public CoachModel getCoachByCoachID(String coachID) {
-        //System.out.println("controller call");
-        return dbHandler.getCoachByCoachID(coachID);
-    }
 
     public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID) {
        return dbHandler.showAllSchedulesMadeByCoach(coachID);

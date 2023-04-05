@@ -9,6 +9,7 @@ import {
     PlayerObj,
     PlayerPhysicalObj,
     PlayerPhysical,
+    PlayerOption,
 } from "../shared/types";
 import {
     Autocomplete,
@@ -102,7 +103,7 @@ const PlayerInfoPage = () => {
     };
 
     const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
-    const [options, setOptions] = useState<Player[]>([]);
+    const [options, setOptions] = useState<PlayerOption[]>([]);
 
     const fetchOptions = async () => {
         // TODO actually integrate w server later
@@ -126,10 +127,30 @@ const PlayerInfoPage = () => {
         fetchOptions();
     }, []);
 
-    const handleSelectedChange = async (e: any, newValue: Player | null) => {
-        // TODO run SELECT query for new value to pull most recent data
+    const handleSelectedChange = async (
+        e: any,
+        newValue: PlayerOption | null
+    ) => {
+        console.log(newValue);
 
-        setSelectedPlayer(newValue);
+        if (!newValue) {
+            setSelectedPlayer(null);
+            return;
+        }
+
+        try {
+            const res = await fetch(
+                createRoute(`players/${newValue?.playerID}`)
+            );
+
+            const data: Player = await res.json();
+
+            setSelectedPlayer(data);
+        } catch (e) {
+            console.log(e);
+        }
+
+        // setSelectedPlayer(newValue);
     };
 
     const handleMoreInfo = async () => {
@@ -193,7 +214,7 @@ const PlayerInfoPage = () => {
                 />
                 <Divider sx={{ mt: 2, mb: 1 }} />
                 {/* Modal for extra player info display */}
-                <Button onClick={handleOpenInfoPopup}>Open modal</Button>
+                {/* <Button onClick={handleOpenInfoPopup}>Open modal</Button> */}
                 <Modal open={moreInfoOpen} onClose={handleCloseInfoPopup}>
                     <Paper>
                         <InfoPopup>

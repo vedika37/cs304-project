@@ -78,7 +78,7 @@ public class DatabaseConnectionHandler {
 
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
+            ResultSet rs = stmt.executeQuery("SELECT PLAYERID,NAME FROM PLAYERHASRANKINGISINTEAMFOLLOWS");
 
             while(rs.next()) {
                 PlayerOptionModel model = new PlayerOptionModel(rs.getString("playerID"),
@@ -100,7 +100,7 @@ public class DatabaseConnectionHandler {
 
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
+            ResultSet rs = stmt.executeQuery("SELECT TYPE, NAME, DIVISION FROM TEAM");
 
             while(rs.next()) {
                 TeamOptionModel model = new TeamOptionModel(rs.getString("type"),
@@ -118,6 +118,7 @@ public class DatabaseConnectionHandler {
     }
     ///////////////////////////////////////////////////////////////utility//
 
+    // TODO SANITIZE INPUT
     // get coach by coachID query
     public CoachModel getCoachByCoachID(String coachID) {
         CoachModel result = null;
@@ -135,6 +136,74 @@ public class DatabaseConnectionHandler {
                         rs.getString("name"),
                         rs.getString("phoneNumber"),
                         rs.getString("specialization"));
+
+                result = model;
+            }
+
+            rs.close();
+            stmt.close();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    // TODO SANITIZE INPUT
+    //get player by playerID query
+    public PlayerHasRankingIsInTeamFollowsModel getPlayerByPlayerID(String playerID) {
+        PlayerHasRankingIsInTeamFollowsModel result = null;
+//        System.out.println("dbhandler call"); //this was for debugging
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM PLAYERHASRANKINGISINTEAMFOLLOWS WHERE PLAYERID = '"+playerID+"'");
+
+
+            // should only return 1 item as primary key
+
+            while(rs.next()) {
+                PlayerHasRankingIsInTeamFollowsModel model = new PlayerHasRankingIsInTeamFollowsModel(rs.getString("playerID"),
+                        rs.getString("name"),
+                        rs.getString("position"),
+                        rs.getInt("playerNumber"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("rankNumber"),
+                        rs.getString("rankType"),
+                        rs.getString("teamType"),
+                        rs.getString("teamName"),
+                        rs.getString("division"),
+                        rs.getString("scheduleID"));
+
+                result = model;
+            }
+
+            rs.close();
+            stmt.close();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    // TODO SANITIZE INPUT
+    // get coach by coachID query
+    public TeamModel getTeamByModel(String type, String name, String division) {
+        TeamModel result = null;
+//        System.out.println("dbhandler call"); //this was for debugging
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM TEAM WHERE (TYPE = '"+type+"' AND NAME = '"+name+"' AND DIVISION = '"+division+"'");
+
+
+            // should only return 1 item as are primary key
+
+            while(rs.next()) {
+                TeamModel model = new TeamModel(rs.getString("type"),
+                        rs.getString("name"),
+                        rs.getString("division"));
 
                 result = model;
             }
