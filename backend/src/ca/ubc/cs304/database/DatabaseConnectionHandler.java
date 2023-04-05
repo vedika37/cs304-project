@@ -336,8 +336,9 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    // TODO performace points?? also need to add custom obj to frontend to display
     // projection query order by rank
-    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(String givenSeason) {
+    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> getRankingsBySeason(String givenSeason) {
         ArrayList<PlayerHasRankingIsInTeamFollowsModel> result = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT P.PlayerID, P.name, P.rankNumber, P.teamName\n" +
@@ -370,7 +371,7 @@ public class DatabaseConnectionHandler {
     }
 
     // selection projection join query
-    public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID) {
+    public SportsScheduleModel[] getAllSchedulesMadeByCoach(String coachID) {
         ArrayList<SportsScheduleModel> result = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT S.scheduleID, S.startTime, S.endTime, s.season\n" +
@@ -551,7 +552,7 @@ public class DatabaseConnectionHandler {
     }
 
     // aggregation with having query
-    public ArrayList<String> showHighPerformingTeams() {
+    public ArrayList<String> getHighPerformingTeams() {
         ArrayList<String> result = new ArrayList<>();
 //        int result = 999;
         try {
@@ -624,10 +625,19 @@ public class DatabaseConnectionHandler {
     }
 
     // nested aggregation with group by
-    public TeamModel showBestPerformingTeam() {
+    public TeamModel getBestPerformingTeam() {
         TeamModel result = null;
 
         try {
+//            alternative
+//            SELECT t.TYPE,TEAMNAME,t.DIVISION, AVG(Pe.performancePoints)
+//            FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe
+//            WHERE  P.teamName = T.name AND P.playerID = Pe.playerID
+//            GROUP BY t.TYPE, TEAMNAME, t.DIVISION
+//            HAVING avg(Pe.performancePoints) >= all (SELECT AVG(Pe.performancePoints)
+//                    FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe
+//                    WHERE  P.teamName = T.name AND P.playerID = Pe.playerID
+//                    GROUP BY teamName)
 //            System.out.println(givenTeamName);
             PreparedStatement ps = connection.prepareStatement("SELECT teamName, AVG(Pe.performancePoints)\n" +
                     "    FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe\n" +

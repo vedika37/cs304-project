@@ -8,6 +8,7 @@ import {
     Grid,
     List,
     ListItem,
+    ListItemIcon,
     ListItemText,
     Paper,
     Stack,
@@ -15,13 +16,17 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import { Player, Team } from "../shared/types";
+import { createRoute } from "../shared/proxy";
+
+import SportsBarIcon from "@mui/icons-material/SportsBar";
 
 interface TPDProps {
-    data: any[]; // todo type properly
+    data: string[]; // only takes a string name of team/palyer for now
     label: string;
     handleRefresh: () => void;
 }
 
+// TODO STYLING NEEDS WORK!!!!!!!!!!!
 const TopPerformerDisplay = ({ data, label, handleRefresh }: TPDProps) => {
     return (
         <>
@@ -40,26 +45,39 @@ const TopPerformerDisplay = ({ data, label, handleRefresh }: TPDProps) => {
                     sx={{
                         width: 600,
                         maxWidth: 1050,
-                        height: 150,
+                        height: 160,
                         overflowX: "auto",
-                        border: "1px solid red",
+                        border: "1px solid #e0e0e0",
                         margin: "0 auto",
+                        p: 2,
                     }}
                 >
                     <List component={Stack} direction="row">
                         {data.map((value, index) => {
                             return (
-                                <Paper key={index}>
+                                <Paper
+                                    key={index}
+                                    sx={{
+                                        m: 1,
+                                    }}
+                                >
                                     <ListItem
                                         sx={{
                                             minWidth: 200,
                                             maxWidth: 200,
+                                            minHeight: "100%",
+                                            maxHeight: 100,
+                                            m: 1,
                                         }}
                                     >
-                                        <ListItemText
-                                            primary="TODO"
-                                            secondary="TODO"
-                                        />
+                                        {/*  */}
+                                        {/* placeholder bc no avatars/icons */}
+                                        <ListItemIcon>
+                                            <SportsBarIcon></SportsBarIcon>
+                                        </ListItemIcon>
+                                        {/*  */}
+                                        <ListItemText primary={value} />
+                                        <Button>View</Button>
                                     </ListItem>
                                 </Paper>
                             );
@@ -75,29 +93,68 @@ const MainPage = () => {
     const [topTeam, setTopTeam] = useState<Team | null>(null);
     const [topPlayer, setTopPlayer] = useState<Player | null>(null);
 
-    const [topTeams, setTopTeams] = useState<Team[] | []>([]);
-    const [topPlayers, setTopPlayers] = useState<Player[] | []>([]);
+    const [topTeams, setTopTeams] = useState<string[] | []>([]);
+    const [topPlayers, setTopPlayers] = useState<string[] | []>([]);
+
+    const refreshTopTeam = async () => {
+        // console.log("fetching top team");
+
+        try {
+            const res = await fetch(createRoute("api/best-performing-team"));
+
+            // res handling goes here TODO
+
+            const data: Team = await res.json();
+            // console.log(data);
+            setTopTeam(data);
+        } catch (e) {}
+    };
 
     const refreshTopTeams = async () => {
-        console.log("refreshing teams");
+        // console.log("refreshing teams");
+
+        try {
+            const res = await fetch(createRoute("api/high-performing-teams"));
+
+            // TODO res status/error handling
+            // if (res.status === 200)
+
+            const data: string[] = await res.json();
+
+            // console.log("DATA:", data);
+
+            setTopTeams(data);
+        } catch (e) {}
     };
 
     const refreshTopPlayers = async () => {
-        console.log("refreshing players");
+        // console.log("refreshing players");
     };
 
     const refreshOverview = async () => {
-        console.log("refreshing overview");
+        // console.log("refreshing overview");
+        refreshTopTeam();
+        // refreshTopPlayer();
+        refreshTopPlayers();
+        refreshTopTeams();
     };
 
     useEffect(() => {
-        console.log("fetching overview data onmount");
+        // console.log("fetching overview data onmount");
         refreshOverview();
     }, []);
+
+    const testData = () => {
+        console.log("Players", topPlayer, topPlayers);
+        console.log("Teams", topTeam, topTeams);
+    };
 
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
+                {/* <Button variant="contained" onClick={testData}>
+                    TEST
+                </Button> */}
                 <Stack direction="row" justifyContent="space-between">
                     <Typography variant="h6">OVERVIEW</Typography>
                     <Button variant="outlined" onClick={refreshOverview}>
@@ -126,7 +183,8 @@ const MainPage = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={2} sm={3} md={6}>
+                    {/* UNUSED/DEPRECATED */}
+                    {/* <Grid item xs={2} sm={3} md={6}>
                         <Card style={{ height: 150 }}>
                             <CardContent>
                                 <Typography
@@ -140,22 +198,23 @@ const MainPage = () => {
                                 </Typography>
                             </CardContent>
                         </Card>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 {/*  */}
                 <Divider sx={{ mt: 1, mb: 1 }} />
                 <TopPerformerDisplay
-                    data={topTeams.map((team) => team.name)}
+                    data={topTeams.map((team) => team)}
                     label="TEAMS"
                     handleRefresh={refreshTopTeams}
                 />
                 <Divider sx={{ mt: 1, mb: 1 }} />
-                <TopPerformerDisplay
+                {/* UNUSED/DEPRECATED */}
+                {/* <TopPerformerDisplay
                     data={topPlayers.map((player) => player.name)}
                     label="PLAYERS"
                     handleRefresh={refreshTopPlayers}
                 />
-                <Divider sx={{ mt: 1, mb: 1 }} />
+                <Divider sx={{ mt: 1, mb: 1 }} /> */}
             </Box>
         </div>
     );

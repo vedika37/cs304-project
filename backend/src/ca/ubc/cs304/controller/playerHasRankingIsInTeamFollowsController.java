@@ -1,9 +1,7 @@
 package ca.ubc.cs304.controller;
 
 
-import ca.ubc.cs304.model.CoachModel;
 import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
-import ca.ubc.cs304.model.SportsScheduleModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,16 +27,21 @@ public class playerHasRankingIsInTeamFollowsController {
         return controller.getPlayerByPlayerID(playerID);
     }
 
-//    @GetMapping("/players/{season}")
-//    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(@PathVariable("season") String season) {
-//        return controller.rankBySeason(season);
-//    }
-//
-//    @GetMapping("/playerCount")
-//    public HashMap<String, Integer> showCountOfAllTeams() {
-//        return controller.showCountOfAllTeams();
-//    }
-//
+    // TODO not complete
+    // this should really be in a rankings controller but since we dont really use it besides for this its here for now
+    @GetMapping("/rankings/{season}")
+    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> getRankingsBySeason(@PathVariable("season") String season) {
+        return controller.getRankingsBySeason(season);
+    }
+
+    // TODO ???? what is this?
+    @GetMapping("/playerCount")
+    public HashMap<String, Integer> showCountOfAllTeams() {
+        return controller.showCountOfAllTeams();
+    }
+
+
+    // moved to apiController as it is more appropriate
 //    @GetMapping("/players/TheLions")
 //    public PlayerHasRankingIsInTeamFollowsModel showStarPlayers() {
 //        String teamName = "The Lions";

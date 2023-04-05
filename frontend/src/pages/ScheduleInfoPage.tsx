@@ -21,15 +21,15 @@ function createData(
     scheduleID: string,
     startTime: Date,
     endTime: Date,
-    season: string,
-    type: GameSchedule | TrainingSchedule
+    season: string
+    // type: GameSchedule | TrainingSchedule
 ) {
     return {
         scheduleID,
         startTime,
         endTime,
         season,
-        type,
+        // type,
     };
 }
 
@@ -71,13 +71,13 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 >
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
-                            {Object.entries(row.type).map(([key, value], i) => {
+                            {/* {Object.entries(row.type).map(([key, value], i) => {
                                 return (
                                     <Typography key={i}>
                                         {key}: {value}
                                     </Typography>
                                 );
-                            })}
+                            })} */}
                         </Box>
                     </Collapse>
                 </TableCell>
@@ -92,10 +92,11 @@ function randomDate() {
 
 const data = [
     // random test shedule
-    createData("S123", randomDate(), randomDate(), "season1", {
-        groupName: "g1",
-        league: "l1",
-    }),
+    // createData("S123", randomDate(), randomDate(), "season1", {
+    //     groupName: "g1",
+    //     league: "l1",
+    // }),
+    createData("S123", randomDate(), randomDate(), "season1"),
 ];
 
 function ScheduleTable() {

@@ -1,5 +1,6 @@
 package ca.ubc.cs304.controller;
 
+import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
 import ca.ubc.cs304.model.TeamModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,10 +16,12 @@ public class teamController {
     @Autowired
     private Controller controller;
 
-    @GetMapping("/high-performing-teams")
-    public ArrayList<String> getHighPerformingTeams() {
-        return controller.showHighPerformingTeams();
-    }
+
+//    moved to apiController
+//    @GetMapping("/high-performing-teams")
+//    public ArrayList<String> getHighPerformingTeams() {
+//        return controller.showHighPerformingTeams();
+//    }
 
     // this is not restful
     @GetMapping("team?type={type}&name={name}&division={division}")
@@ -28,9 +31,11 @@ public class teamController {
         return controller.getTeamByModel(type, name, division);
     }
 
+    //    moved to apiController
+//    @GetMapping("best-performing-team")
+//    public TeamModel getBestPerformingTeam() {
+//        return controller.showBestPerformingTeam();
+//    }
 
-    @GetMapping("best-performing-team")
-    public TeamModel getBestPerformingTeam() {
-        return controller.showBestPerformingTeam();
-    }
+
 }

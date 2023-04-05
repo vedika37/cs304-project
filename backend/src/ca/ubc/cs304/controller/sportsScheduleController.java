@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-
 @RestController
 @CrossOrigin
 public class sportsScheduleController {
@@ -17,8 +15,8 @@ public class sportsScheduleController {
     private Controller controller;
 
     @GetMapping("/sportsSchedule/{coachID}")
-    public SportsScheduleModel[] showAllSchedulesMadeByCoach(@PathVariable("coachID") String coachID) {
-        return controller.showAllSchedulesMadeByCoach(coachID);
+    public SportsScheduleModel[] getAllSchedulesMadeByCoach(@PathVariable("coachID") String coachID) {
+        return controller.getAllSchedulesMadeByCoach(coachID);
     }
 
 

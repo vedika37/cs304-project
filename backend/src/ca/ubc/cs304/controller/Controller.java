@@ -79,8 +79,8 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     }
 
 
-    public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID) {
-       return dbHandler.showAllSchedulesMadeByCoach(coachID);
+    public SportsScheduleModel[] getAllSchedulesMadeByCoach(String coachID) {
+       return dbHandler.getAllSchedulesMadeByCoach(coachID);
     }
 
     public PlayerHasRankingIsInTeamFollowsModel[] getPlayers(){
@@ -91,20 +91,20 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         return dbHandler.showCountOfAllTeams();
     }
 
-    public ArrayList<String> showHighPerformingTeams() {
-        return dbHandler.showHighPerformingTeams();
+    public ArrayList<String> getHighPerformingTeams() {
+        return dbHandler.getHighPerformingTeams();
     }
 
     public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String teamName) {
         return dbHandler.showStarPlayer(teamName);
     }
 
-    public TeamModel showBestPerformingTeam() {
-        return dbHandler.showBestPerformingTeam();
+    public TeamModel getBestPerformingTeam() {
+        return dbHandler.getBestPerformingTeam();
     }
 
-    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(String season){
-        return dbHandler.rankBySeason(season);
+    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> getRankingsBySeason(String season){
+        return dbHandler.getRankingsBySeason(season);
     }
     public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(String teamName) {
         return dbHandler.coachedAllPlayersInGivenTeam(teamName);

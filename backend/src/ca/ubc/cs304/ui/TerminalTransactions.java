@@ -250,7 +250,7 @@ public class TerminalTransactions {
 			System.out.print("Please enter the season you wish to check the ranks for: ");
 			season = readLine().trim();
 		}
-		delegate.rankBySeason(season);
+		delegate.getRankingsBySeason(season);
 	}
 	private void handleJoinOption() {
 		String coachID = null;
@@ -259,7 +259,7 @@ public class TerminalTransactions {
 			coachID = readLine().trim();
 		}
 
-		delegate.showAllSchedulesMadeByCoach(coachID);
+		delegate.getAllSchedulesMadeByCoach(coachID);
 	}
 
 	private void handleDivisionOption() {
@@ -282,7 +282,7 @@ public class TerminalTransactions {
 		delegate.showCountOfAllTeams();
 	}
 	private void handleAggregationWithHavingOption() {
-		delegate.showHighPerformingTeams();
+		delegate.getHighPerformingTeams();
 	}
 
 	private void handleAggregationOption2(){
@@ -295,7 +295,7 @@ public class TerminalTransactions {
 	}
 
 	private void handleNestedAggregationOption() {
-		delegate.showBestPerformingTeam();
+		delegate.getBestPerformingTeam();
 	}
 
     private void handleCoachDivsion() {
