@@ -90,7 +90,7 @@ CREATE TABLE Coach(
                       phoneNumber varchar(20),
                       specialization	varchar(20),
                       PRIMARY KEY(coachID),
-                      FOREIGN KEY(specialization) REFERENCES Specialization(specialization)
+                      FOREIGN KEY(specialization) REFERENCES Specialization(specialization) ON DELETE CASCADE
 );
 
 
@@ -264,6 +264,9 @@ VALUES ('Goalkeeping', 'Soccer');
 INSERT INTO Specialization(specialization, type)
 VALUES ('Skating', 'Hockey');
 
+INSERT INTO Specialization(specialization, type)
+VALUES ('a', 'Hockey');
+
 
 -- Coach
 INSERT INTO Coach (coachID, name, phoneNumber, specialization)
@@ -280,6 +283,9 @@ VALUES ('C004', 'Sarah Lee', '555-1357', 'Goalkeeping');
 
 INSERT INTO Coach (coachID, name, phoneNumber, specialization)
 VALUES ('C005', 'David Kim', '555-7890', 'Skating');
+
+INSERT INTO Coach (coachID, name, phoneNumber, specialization)
+VALUES ('C006', 'b', '555', 'a');
 
 -- SportsSchedule
 INSERT INTO SportsSchedule(scheduleID, startTime, endTime, season)

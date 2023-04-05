@@ -2,8 +2,11 @@ package ca.ubc.cs304.delegates;
 
 import ca.ubc.cs304.model.CoachModel;
 import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
+import ca.ubc.cs304.model.SportsScheduleModel;
+import ca.ubc.cs304.model.TeamModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This interface uses the delegation design pattern where instead of having
@@ -20,14 +23,16 @@ public interface TerminalTransactionsDelegate {
 	public void deleteCoach(String coachID);
 	public void insertCoach(CoachModel model);
 	public void showCoach();
-	public void updateCoach(String coachID, String name);
-	public void showAllSchedulesMadeByCoach(String coachID);
+	public String updateCoach(String coachID, String name, String phoneNumber, String specialization);
+	public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID);
 	public void showAllPlayersAndRanksInTeam(String teamName);
 	public void showPlayers();
-	public void showCountOfAllTeams();
-	public void showHighPerformingTeams();
-	public void showStarPlayer(String teamName);
-	public void showBestPerformingTeam();
-	public void rankBySeason(String givenSeason);
+	public HashMap<String, Integer> showCountOfAllTeams();
+	public ArrayList<String> showHighPerformingTeams();
+	public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String teamName);
+	public TeamModel showBestPerformingTeam();
+	public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(String givenSeason);
 	public void terminalTransactionsFinished();
+
+    public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(String teamName);
 }

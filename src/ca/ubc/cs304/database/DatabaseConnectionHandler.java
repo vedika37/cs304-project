@@ -10,15 +10,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ca.ubc.cs304.model.CoachModel;
+//import ca.ubc.cs304.model.CoachOptionModel;
 import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
 import ca.ubc.cs304.model.SportsScheduleModel;
+import ca.ubc.cs304.model.TeamModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * This class handles all database related transactions
  */
 public class DatabaseConnectionHandler {
     // Use this version of the ORACLE_URL if you are running the code off of the server
-   // private static final String ORACLE_URL = "jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu";
+//    private static final String ORACLE_URL = "jdbc:oracle:thin:@dbhost.students.cs.ubc.ca:1522:stu";
     // Use this version of the ORACLE_URL if you are tunneling into the undergrad servers
   private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
@@ -47,6 +51,63 @@ public class DatabaseConnectionHandler {
         }
     }
 
+    //utility///////////////////////////////////////////////////////////////
+    //OPTIONS
+    //coach options
+//    public CoachOptionModel[] getCoachOptions() {
+//        ArrayList<CoachOptionModel> result = new ArrayList<CoachOptionModel>();
+//
+//        try {
+//            Statement stmt = connection.createStatement();
+//            ResultSet rs = stmt.executeQuery("SELECT COACHID,NAME FROM coach");
+//
+//            while(rs.next()) {
+//                CoachOptionModel model = new CoachOptionModel(rs.getString("coachID"),
+//                        rs.getString("name"));
+//                result.add(model);
+//            }
+//
+//            rs.close();
+//            stmt.close();
+//        } catch (SQLException e) {
+//            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+//        }
+//
+//        return result.toArray(new CoachOptionModel[result.size()]);
+//    }
+    ///////////////////////////////////////////////////////////////utility//
+
+    // get coach by coachID query
+    public CoachModel getCoachByCoachID(String coachID) {
+        CoachModel result = null;
+        System.out.println("dbhandler call");
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT * FROM coach WHERE COACHID = '"+coachID+"'");
+
+
+            // should only return 1 item as coachIDs are primary key
+
+            while(rs.next()) {
+                CoachModel model = new CoachModel(rs.getString("coachID"),
+                        rs.getString("name"),
+                        rs.getString("phoneNumber"),
+                        rs.getString("specialization"));
+
+                result = model;
+            }
+
+            rs.close();
+            stmt.close();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+
     // delete query
     public void deleteCoach(String coachID) {
         try {
@@ -68,7 +129,7 @@ public class DatabaseConnectionHandler {
     }
 
     // insert query
-    public void insertCoach(CoachModel model) {
+    public String insertCoach(CoachModel model) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO Coach VALUES (?,?,?,?)");
             ps.setString(1, model.getCoachID());
@@ -84,6 +145,7 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
+            return (EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
@@ -129,6 +191,7 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
+            return (EXCEPTION_TAG + " " + e.getMessage());
         }
     }
 
@@ -204,13 +267,15 @@ public class DatabaseConnectionHandler {
 
         try {
             System.out.println(givenTeamName);
-            PreparedStatement ps = connection.prepareStatement("SELECT P.name, rankNumber FROM playerHasRankingIsInTeamFollows P WHERE teamName = ? AND NOT EXISTS"+
+            PreparedStatement ps = connection.prepareStatement("SELECT P.name, P.rankNumber " +
+                    "FROM playerHasRankingIsInTeamFollows P " +
+                    "WHERE teamName = ? AND EXISTS"+
                     "              ((SELECT P1.name, P1.rankNumber\n" +
                     "                FROM playerHasRankingIsInTeamFollows P1)\n" +
                     "              MINUS" +
                     "              (SELECT P2.name, P2.rankNumber\n" +
                     "              FROM playerHasRankingIsInTeamFollows P2\n" +
-                    "              WHERE P2.teamName <> ?>))");
+                    "              WHERE P2.teamName <> ?))");
             ps.setString(1, givenTeamName);
             ps.setString(2, givenTeamName);
             ResultSet rs = ps.executeQuery();
@@ -222,15 +287,16 @@ public class DatabaseConnectionHandler {
                         rs.getInt("playerNumber"),
                         rs.getString("phoneNumber"),
                         rs.getInt("rankNumber"),
-                        rs.getString("rankType"),
-                        rs.getString("teamType"),
-                        rs.getString("teamName"),
-                        rs.getString("division"),
-                        rs.getString("scheduleID")
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
                 );
 
                 result.add(model);
-                System.out.println(model.getPlayerID().toString() + " " + model.getTeamName().toString());
+//                System.out.println(result);
+                System.out.println(model.getName() );
             }
 
             rs.close();
@@ -337,12 +403,12 @@ public class DatabaseConnectionHandler {
     }
 
     // nested aggregation query
-    public String showStarPlayer(String givenTeamName) {
-        String result = null;
+    public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String givenTeamName) {
+        PlayerHasRankingIsInTeamFollowsModel result = null;
 
         try {
 //            System.out.println(givenTeamName);
-            PreparedStatement ps = connection.prepareStatement("SELECT P.name\n" +
+            PreparedStatement ps = connection.prepareStatement("SELECT P.playerID, P.name\n" +
                     "FROM playerHasRankingIsInTeamFollows P, displaysPerformance Pe\n" +
                     "WHERE P.teamName LIKE ? AND P.playerID = Pe.playerID AND Pe.performancePoints = ( SELECT MAX (Pe2.performancePoints)\n" +
                     "FROM playerHasRankingIsInTeamFollows P2, displaysPerformance Pe2\n" +
@@ -367,8 +433,8 @@ public class DatabaseConnectionHandler {
     }
 
     // nested aggregation with group by
-    public String showBestPerformingTeam() {
-        String result = "";
+    public TeamModel showBestPerformingTeam() {
+        TeamModel result = null;
 
         try {
 //            System.out.println(givenTeamName);
@@ -385,8 +451,10 @@ public class DatabaseConnectionHandler {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {
-                result = (rs.getString(1));
-                System.out.println(rs.getString(1));
+                TeamModel model = new TeamModel(null, rs.getString("teamName"), null);
+
+                result = model;
+                System.out.println(result.getName());
             }
 
             rs.close();

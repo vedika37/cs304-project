@@ -5,28 +5,94 @@ import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.model.CoachModel;
 import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
+import ca.ubc.cs304.model.SportsScheduleModel;
+import ca.ubc.cs304.model.TeamModel;
 import ca.ubc.cs304.ui.LoginWindow;
 import ca.ubc.cs304.ui.TerminalTransactions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This is the main controller class that will orchestrate everything.
  */
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
-
-@SpringBootApplication
 public class Controller implements LoginWindowDelegate, TerminalTransactionsDelegate {
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
+
+    //////////////////////////////////////////////////////
+    public String testVar = "testVar";
+
+    public String getpTestVar() {
+        return pTestVar;
+    }
+
+    public void setpTestVar(String pTestVar) {
+        this.pTestVar = pTestVar;
+    }
+
+    private String pTestVar = "pTestVar";
+
+    /////////////////////////////////////////////////////
+
+    //utility///////////////////////////////////////////////////////////////
+    //OPTIONS
+    //coach options
+//    public CoachOptionModel[] getCoachOptions() {
+//        return dbHandler.getCoachOptions();
+//    }
+
+    public CoachModel[] getCoaches() {
+        return dbHandler.getCoachInfo();
+    }
+
+    // get coach by id
+    public CoachModel getCoachByCoachID(String coachID) {
+        //System.out.println("controller call");
+        return dbHandler.getCoachByCoachID(coachID);
+    }
+
+    public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID) {
+       return dbHandler.showAllSchedulesMadeByCoach(coachID);
+    }
+
+    public PlayerHasRankingIsInTeamFollowsModel[] getPlayers(){
+        return dbHandler.getPlayerInfo();
+    }
+
+    public HashMap<String, Integer> showCountOfAllTeams() {
+        return dbHandler.showCountOfAllTeams();
+    }
+
+    public ArrayList<String> showHighPerformingTeams() {
+        return dbHandler.showHighPerformingTeams();
+    }
+
+    public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String teamName) {
+        return dbHandler.showStarPlayer(teamName);
+    }
+
+    public TeamModel showBestPerformingTeam() {
+        return dbHandler.showBestPerformingTeam();
+    }
+
+    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(String season){
+        return dbHandler.rankBySeason(season);
+    }
+    public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(String teamName) {
+        return dbHandler.coachedAllPlayersInGivenTeam(teamName);
+    }
+
+
+    ///////////////////////////////////////////////////////////////utility//
+
+
 
     public Controller() {
         dbHandler = new DatabaseConnectionHandler();
     }
 
-    private void start() {
+    public void start() {
         loginWindow = new LoginWindow();
         loginWindow.showFrame(this);
     }
@@ -39,7 +105,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     public void login(String username, String password) {
         System.out.println("Welcome");
         boolean didConnect = dbHandler.login(username, password);
-        System.out.println("Welcome b");
+        System.out.println("Welcome back");
 //        boolean didConnect = true;
 
         if (didConnect) {
@@ -60,13 +126,14 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         }
     }
 
+
     /**
      * TermainalTransactionsDelegate Implementation
      * <p>
      * Insert a branch with the given info
      */
-    public void insertCoach(CoachModel model) {
-        dbHandler.insertCoach(model);
+    public String insertCoach(CoachModel model) {
+        return dbHandler.insertCoach(model);
     }
 
     /**
@@ -78,22 +145,28 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         dbHandler.deleteCoach(coachID);
     }
 
+    public String deleteSpecialization(String specialization) {
+        return dbHandler.deleteSpecialization(specialization);
+    }
+
     /**
      * TermainalTransactionsDelegate Implementation
      * <p>
      * Update the branch name for a specific ID
      */
 
-    public void updateCoach(String coachID, String name) {
-        dbHandler.updateCoach(coachID, name);
+    public String updateCoach(String coachID, String name, String phoneNUmber, String specialization) {
+        return dbHandler.updateCoach(coachID, name, phoneNUmber, specialization);
     }
 
-    public void showAllSchedulesMadeByCoach(String coachID) {
-        dbHandler.showAllSchedulesMadeByCoach(coachID);
-    }
 
     public void showAllPlayersAndRanksInTeam(String teamName) {
         dbHandler.showAllPlayersAndRanksInTeam(teamName);
+    }
+
+
+    public CoachModel[] testGetCoaches() {
+        return dbHandler.getCoachInfo();
     }
 
     /**
@@ -153,25 +226,9 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         }
     }
 
-    public void showCountOfAllTeams() {
-        dbHandler.showCountOfAllTeams();
-    }
 
-    public void showHighPerformingTeams() {
-        dbHandler.showHighPerformingTeams();
-    }
 
-    public void showStarPlayer(String teamName) {
-        dbHandler.showStarPlayer(teamName);
-    }
 
-    public void showBestPerformingTeam() {
-        dbHandler.showBestPerformingTeam();
-    }
-
-    public void rankBySeason(String season){
-        dbHandler.rankBySeason(season);
-    }
     /**
      * TerminalTransactionsDelegate Implementation
      * <p>
@@ -199,13 +256,8 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     /**
      * Main method called at launch time
      */
-    public static void main(String args[]) {
-        SpringApplicationBuilder builder = new SpringApplicationBuilder(Controller.class);
-
-        builder.headless(false);
-
-        ConfigurableApplicationContext context = builder.run(args);
-        Controller controller = new Controller();
-        controller.start();
-    }
+//    public static void main(String args[]) {
+//        Controller controller = new Controller();
+//        controller.start();
+//    }
 }
