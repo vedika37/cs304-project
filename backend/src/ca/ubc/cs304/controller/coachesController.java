@@ -36,11 +36,11 @@ public class coachesController {
 //    }
     @PutMapping("/coaches/{id}")
     public String updateCoach(@PathVariable("id") String coachID, @RequestBody CoachModel coach) {
-        System.out.println("coachID: "+coachID);
-        System.out.println("id: "+coach.getCoachID());
-        System.out.println("name: "+coach.getName());
-        System.out.println("phonenumber: "+coach.getPhoneNumber());
-        System.out.println("spec: "+coach.getSpecialization());
+//        System.out.println("coachID: "+coachID);
+//        System.out.println("id: "+coach.getCoachID());
+//        System.out.println("name: "+coach.getName());
+//        System.out.println("phonenumber: "+coach.getPhoneNumber());
+//        System.out.println("spec: "+coach.getSpecialization());
 
         return controller.updateCoach(coachID, coach.getName(),coach.getPhoneNumber(),coach.getSpecialization());
     }
@@ -70,9 +70,12 @@ public class coachesController {
 //        return controller.deleteCoach(coachID);
 //    }
 
-    // todo
-    @DeleteMapping("/specialization/delete/{specialization}")
+
+    @DeleteMapping("/specialization/{specialization}")
     public String deleteSpecialization(@PathVariable("specialization")  String specialization) {
+
+        System.out.println(specialization);
+
         return controller.deleteSpecialization(specialization);
     }
 

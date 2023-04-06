@@ -112,9 +112,9 @@ const UpdateCoachForm = () => {
                 />
             </div>
             <Stack direction="row" justifyContent="space-between">
-                <Button variant="outlined" onClick={logInsertData}>
+                {/* <Button variant="outlined" onClick={logInsertData}>
                     Log
-                </Button>
+                </Button> */}
                 <div className="spacing"></div>
                 <Button variant="contained" onClick={handleUpdateCoachSubmit}>
                     Submit

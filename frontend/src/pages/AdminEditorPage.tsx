@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import InsertCoachForm from "../components/InsertCoachForm";
 import UpdateCoachForm from "../components/UpdateCoachForm";
+import DeleteSpecializationForm from "../components/DeleteSpecializationForm";
 
 const AdminEditorPage = () => {
     return (
@@ -43,6 +44,17 @@ const AdminEditorPage = () => {
                 </Stack>
                 <Divider sx={{ mt: 1, mb: 1 }} />
                 <UpdateCoachForm />
+                <Divider sx={{ mt: 2, mb: 1 }} />
+                {/* DELETE A SPECIALIZATION */}
+                <Stack direction="row" justifyContent="space-between">
+                    <Box display="flex" alignItems="end">
+                        <Typography variant="h6">
+                            DELETE A SPECIALIZATION
+                        </Typography>
+                    </Box>
+                </Stack>
+                <Divider sx={{ mt: 1, mb: 1 }} />
+                <DeleteSpecializationForm />
                 <Divider sx={{ mt: 2, mb: 1 }} />
                 {/*  */}
             </Box>
