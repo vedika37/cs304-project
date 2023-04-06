@@ -6,6 +6,7 @@ import {
     View,
     Team,
     TeamObj,
+    Player,
 } from "../shared/types";
 import {
     Autocomplete,
@@ -108,8 +109,8 @@ const TeamInfoPage = () => {
     };
 
     const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
-
     const [options, setOptions] = useState<Team[]>([]);
+    const [topPlayer, setTopPlayer] = useState<Player | null>(null);
 
     const fetchOptions = async () => {
         // todo error handling
@@ -184,9 +185,28 @@ const TeamInfoPage = () => {
                 <Divider sx={{ mt: 2, mb: 1 }} />
                 {/*Team player Table*/}
                 <Grid>
-                    <Typography variant="h6">TODO</Typography>
-                    <Button variant="outlined">Get Players</Button>
+                    <Button variant="outlined">Get Top Player</Button>
                 </Grid>
+                <Divider sx={{ mt: 1, mb: 1 }} />
+                {/*  */}
+                {topPlayer && (
+                    <Grid item xs={2} sm={3} md={6}>
+                        <Card style={{ height: 150 }}>
+                            <CardContent>
+                                <Typography
+                                    variant="overline"
+                                    color="text.secondary"
+                                >
+                                    TOP PLAYER
+                                </Typography>
+                                <Typography variant="h5">
+                                    {topPlayer ? topPlayer.name : ""}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                )}
+                {/*  */}
             </Box>
         </div>
     );

@@ -167,7 +167,7 @@ export default function RankingInfoPage() {
         // console.log(res.status);
         if (res.status === 200) {
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
             setOptions(data);
         }
     };

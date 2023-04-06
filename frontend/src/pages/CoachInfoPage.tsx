@@ -123,9 +123,11 @@ const CoachInfoPage = () => {
         newValue: CoachOption | null
     ) => {
         // console.log(newValue);
+        displaySchedules(false);
 
         if (!newValue) {
             setSelectedCoach(null);
+            // displaySchedules(false);
             return;
         }
 
@@ -137,7 +139,7 @@ const CoachInfoPage = () => {
             const data: Coach = await res.json();
 
             setSelectedCoach(data);
-            displaySchedules(false);
+            // displaySchedules(false);
         } catch (e) {
             console.log(e);
         }
@@ -212,7 +214,13 @@ const CoachInfoPage = () => {
                     {/* <Typography variant="h6">TODO</Typography> */}
                     <Button
                         variant="outlined"
-                        onClick={() => displaySchedules(true)}
+                        onClick={() => {
+                            if (selectedCoach) {
+                                displaySchedules(true);
+                            } else {
+                                alert("Please select a coach");
+                            }
+                        }}
                     >
                         Display Schedules
                     </Button>
