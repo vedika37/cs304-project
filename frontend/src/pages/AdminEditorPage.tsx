@@ -28,12 +28,23 @@ function FormPropsTextFields() {
         specialization: "",
     });
 
-    const handleInsertCoachSubmit = () => {
+    const handleInsertCoachSubmit = async () => {
         if (!newCoach) {
             alert("Please check your inputs and try again");
             return;
         }
         console.log("inserting coach");
+        console.log(JSON.stringify(newCoach));
+        // todo error handling
+        const res = await fetch(createRoute("coaches"), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newCoach),
+        });
+
+        // return message todo
     };
 
     function logInsertData() {
