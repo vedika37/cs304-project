@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { Season, SeasonOption } from "../shared/types";
 import { createRoute } from "../shared/proxy";
+import { create } from "@mui/material/styles/createTransitions";
 
 interface Data {
     rank: number;
@@ -78,7 +79,21 @@ const columns: ColumnData[] = [
     // },
 ];
 
-const rows: Data[] = [];
+type Sample = [string, number, number, number, number];
+
+const sample: readonly Sample[] = [
+    ["Frozff yoghurt", 159, 6.0, 24, 4.0],
+    ["Ice cream sandwich", 237, 9.0, 37, 4.3],
+    ["Eclair", 262, 16.0, 24, 6.0],
+    ["Cupcake", 305, 3.7, 67, 4.3],
+    ["Gingerbread", 356, 16.0, 49, 3.9],
+];
+
+//type this
+// const rows: Data[] = Array.from({ length: 5 }, (_, index) => {
+//     const randomSelection = sample[Math.floor(Math.random() * sample.length)];
+//     return createData(index, ...randomSelection);
+// });
 
 const VirtuosoTableComponents: TableComponents<Data> = {
     Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
@@ -135,7 +150,7 @@ function rowContent(_index: number, row: Data) {
 type RankingData = {
     playerID: string;
     name: string;
-    rankNumber: Number;
+    rankNumber: number;
     teamName: string;
 };
 
@@ -152,7 +167,7 @@ export default function RankingInfoPage() {
         // console.log(res.status);
         if (res.status === 200) {
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
             setOptions(data);
         }
     };
@@ -177,7 +192,7 @@ export default function RankingInfoPage() {
 
             const data: RankingData[] = await res.json();
 
-            console.log(data);
+            // console.log(data);
             setRankingData(data);
         } catch (e) {}
     };
@@ -186,12 +201,28 @@ export default function RankingInfoPage() {
         console.log("selected season:", selectedSeason);
     }
 
+    //todo fix typing
+    // quick hack todo reimplement
+    const rows: Data[] | [] = rankingData
+        ? Array.from({ length: rankingData?.length }, (_, index) => {
+              // console.log(index);
+              //   console.log(rankingData[index]);
+              if (rankingData)
+                  return createData(
+                      rankingData[index].rankNumber,
+                      rankingData[index].playerID,
+                      rankingData[index].name,
+                      rankingData[index].teamName
+                  );
+          })
+        : [];
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
-                <Button variant="contained" onClick={logState}>
+                {/* <Button variant="contained" onClick={logState}>
                     log
-                </Button>
+                </Button> */}
                 <Stack direction="row" justifyContent="space-between">
                     <Box display="flex" alignItems="end">
                         <Typography variant="h6">SELECT A SEASON</Typography>

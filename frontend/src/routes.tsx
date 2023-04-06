@@ -10,6 +10,9 @@ import TeamInfoPage from "./pages/TeamInfoPage";
 // import GameInfoPage from "./pages/GameInfoPage";
 import CoachInfoPage from "./pages/CoachInfoPage";
 import RankingInfoPage from "./pages/RankingInfoPage";
+import AdminPage from "./pages/AdminPage";
+// import AdminEditPage from "./pages/AdminEditPage";
+import AdminEditorPage from "./pages/AdminEditorPage";
 
 export default function AppRouter() {
     const routes = useRoutes([
@@ -52,6 +55,14 @@ export default function AppRouter() {
                     path: "ranking-info",
                     element: <RankingInfoPage />,
                 },
+                {
+                    path: "admin",
+                    element: <AdminPage />,
+                },
+                {
+                    path: "admin/editor",
+                    element: <AdminEditorPage />,
+                },
             ],
         },
         // unused
@@ -59,6 +70,11 @@ export default function AppRouter() {
         //     path: "login",
         //     element: <LoginPage />,
         // },
+        //for testing
+        {
+            path: "login",
+            element: <Navigate to="/admin" />,
+        },
         {
             path: "404",
             element: <Page404 />,
