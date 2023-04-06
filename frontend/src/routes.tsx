@@ -11,6 +11,8 @@ import TeamInfoPage from "./pages/TeamInfoPage";
 import CoachInfoPage from "./pages/CoachInfoPage";
 import RankingInfoPage from "./pages/RankingInfoPage";
 import AdminPage from "./pages/AdminPage";
+// import AdminEditPage from "./pages/AdminEditPage";
+import AdminEditorPage from "./pages/AdminEditorPage";
 
 export default function AppRouter() {
     const routes = useRoutes([
@@ -56,6 +58,10 @@ export default function AppRouter() {
                 {
                     path: "admin",
                     element: <AdminPage />,
+                },
+                {
+                    path: "admin/editor",
+                    element: <AdminEditorPage />,
                 },
             ],
         },

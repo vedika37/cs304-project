@@ -17,6 +17,7 @@ import { Coach, GameSchedule, TrainingSchedule } from "../shared/types";
 import Divider from "@mui/material/Divider";
 import { Stack, Button } from "@mui/material";
 import { createRoute } from "../shared/proxy";
+import { useNavigate } from "react-router-dom";
 
 // LOTS OF REFACTORING AND PROPER TYPING + ERROR HANDLING TO BE DONE BUT FUNCTIONS FOR NOW
 
@@ -302,6 +303,8 @@ const AdminPage = () => {
         setCoachData(data);
     };
 
+    const navigate = useNavigate();
+
     return (
         <Box>
             {/* <Stack direction="row" justifyContent="space-between">
@@ -312,6 +315,12 @@ const AdminPage = () => {
                     Refresh Team Count
                 </Button>
             </Stack> */}
+            <Button
+                variant="contained"
+                onClick={() => navigate("/admin/editor")}
+            >
+                EDITOR
+            </Button>
             {/* COACHES */}
             <Divider sx={{ mt: 0, mb: 1 }} />
             <Stack direction="row" justifyContent="space-between">
