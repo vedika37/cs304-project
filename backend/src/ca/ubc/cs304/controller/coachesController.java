@@ -58,11 +58,11 @@ public class coachesController {
 
 
 
-    // todo
-    @GetMapping("/coaches/division/{teamName}")
-    public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(@PathVariable("teamName") String teamName) {
-        return controller.coachedAllPlayersInGivenTeam(teamName);
-    }
+//    // moved to teamController
+//    @GetMapping("/coaches/division/{teamName}")
+//    public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(@PathVariable("teamName") String teamName) {
+//        return controller.coachedAllPlayersInGivenTeam(teamName);
+//    }
 
     // unused
 //    @DeleteMapping("/coaches/delete/{id}")

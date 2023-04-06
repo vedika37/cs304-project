@@ -112,6 +112,8 @@ const TeamInfoPage = () => {
     const [options, setOptions] = useState<Team[]>([]);
     //type
     const [topPlayer, setTopPlayer] = useState<any>(null);
+    //fix typing
+    const [coaches, setCoaches] = useState<any[]>([]);
 
     const fetchOptions = async () => {
         // todo error handling
@@ -148,6 +150,16 @@ const TeamInfoPage = () => {
         const data = await res.json();
         console.log(data);
         setTopPlayer(data);
+    };
+
+    const fetchCoachesForTeam = async () => {
+        const res = await fetch(
+            createRoute(`teams/${selectedTeam?.name}/coaches`)
+        );
+
+        const data = await res.json();
+        console.log(data);
+        setCoaches(data);
     };
 
     return (
@@ -230,6 +242,30 @@ const TeamInfoPage = () => {
                     </Grid>
                 )}
                 {/*  */}
+                <Divider sx={{ mt: 2, mb: 1 }} />
+                <Grid>
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            if (selectedTeam) {
+                                console.log("coaches fetch");
+                                fetchCoachesForTeam();
+                            } else {
+                                alert("Please select a team first");
+                            }
+                        }}
+                    >
+                        Get Coaches that have worked with team
+                    </Button>
+                </Grid>
+                <Divider sx={{ mt: 1, mb: 1 }} />
+                {coaches.map((v, i) => (
+                    <div key={i}>
+                        ID: {v.coachID}
+                        <br />
+                        NAME: {v.name}
+                    </div>
+                ))}
             </Box>
         </div>
     );
