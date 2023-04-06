@@ -21,12 +21,28 @@ public class coachesController {
 //    }
     @PostMapping("/coaches")
     public String insertCoach(@RequestBody CoachModel coach) {
+//        System.out.println("id: "+coach.getCoachID());
+//        System.out.println("name: "+coach.getName());
+//        System.out.println("phonenumber: "+coach.getPhoneNumber());
+//        System.out.println("spec: "+coach.getSpecialization());
+
+        return controller.insertCoach(coach);
+    }
+
+//    @PutMapping("/coaches/update/{coachID}/{name}/{phoneNumber}/{specialization}")
+//    public String updateCoach(@PathVariable String coachID, @PathVariable String name, @PathVariable String phoneNumber,
+//                              @PathVariable String specialization) {
+//        return controller.updateCoach(coachID, name, phoneNumber, specialization);
+//    }
+    @PutMapping("/coaches/{id}")
+    public String updateCoach(@PathVariable("id") String coachID, @RequestBody CoachModel coach) {
+        System.out.println("coachID: "+coachID);
         System.out.println("id: "+coach.getCoachID());
         System.out.println("name: "+coach.getName());
         System.out.println("phonenumber: "+coach.getPhoneNumber());
         System.out.println("spec: "+coach.getSpecialization());
 
-        return controller.insertCoach(coach);
+        return controller.updateCoach(coachID, coach.getName(),coach.getPhoneNumber(),coach.getSpecialization());
     }
 
     @GetMapping("/coaches")
@@ -41,12 +57,6 @@ public class coachesController {
     }
 
 
-    // todo
-    @PutMapping("/coaches/update/{coachID}/{name}/{phoneNumber}/{specialization}")
-    public String updateCoach(@PathVariable String coachID, @PathVariable String name, @PathVariable String phoneNumber,
-                              @PathVariable String specialization) {
-        return controller.updateCoach(coachID, name, phoneNumber, specialization);
-    }
 
     // todo
     @GetMapping("/coaches/division/{teamName}")
