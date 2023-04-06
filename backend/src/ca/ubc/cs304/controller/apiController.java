@@ -25,6 +25,7 @@ public class apiController {
     @GetMapping("/get-star-players/{teamName}")
     public PlayerHasRankingIsInTeamFollowsModel getStarPlayer(@PathVariable("teamName") String teamName) {
 //        String teamName = "The Lions";
+        String str = teamName.replaceAll("%20", " ");
         return controller.showStarPlayer(teamName);
     }
 
