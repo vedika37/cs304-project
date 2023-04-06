@@ -116,6 +116,29 @@ public class DatabaseConnectionHandler {
 
         return result.toArray(new TeamOptionModel[result.size()]);
     }
+    //season options
+    public SeasonOptionModel[] getSeasonOptions() {
+        ArrayList<SeasonOptionModel> result = new ArrayList<SeasonOptionModel>();
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT SEASON FROM DISPLAYSPERFORMANCE");
+
+            while(rs.next()) {
+                SeasonOptionModel model = new SeasonOptionModel(rs.getString("season"));
+                result.add(model);
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new SeasonOptionModel[result.size()]);
+    }
+
+
     ///////////////////////////////////////////////////////////////utility//
 
     // queries begin here
@@ -245,7 +268,7 @@ public class DatabaseConnectionHandler {
     }
 
 
-    // TODO performace points?? also need to add custom obj to frontend to display
+    // TODO this doesnt return all items see hack below
     // projection query
     public ArrayList<PlayerHasRankingIsInTeamFollowsModel> getRankingsBySeason(String givenSeason) {
         ArrayList<PlayerHasRankingIsInTeamFollowsModel> result = new ArrayList<>();
@@ -277,6 +300,39 @@ public class DatabaseConnectionHandler {
         }
 
         return result;
+    }
+
+    // hack reimplement above later
+    //projection
+    public PlayerRankingModel[] getRankingsBySeasonALT(String givenSeason) {
+        ArrayList<PlayerRankingModel> result = new ArrayList<PlayerRankingModel>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT P.PlayerID, P.name, P.rankNumber, P.teamName\n" +
+                    "    FROM   playerHasRankingIsInTeamFollows P, displaysPerformance Pe\n" +
+                    "    WHERE P.PlayerID = Pe.PlayerID AND\n" +
+                    "    Pe.season = ?");
+            ps.setString(1, givenSeason);
+            ResultSet rs = ps.executeQuery();
+
+
+            while(rs.next()) {
+                PlayerRankingModel model = new PlayerRankingModel(rs.getString("playerID"),
+                        rs.getString("name"),
+                        rs.getInt("rankNumber"),
+                        rs.getString("teamName"));
+                result.add(model);
+                System.out.println(model.getName().toString());
+            }
+
+            rs.close();
+            ps.close();
+            connection.commit();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+
+        return result.toArray(new PlayerRankingModel[result.size()]);
     }
 
     // join query

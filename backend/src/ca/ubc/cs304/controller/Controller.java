@@ -48,6 +48,9 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     public TeamOptionModel[] getTeamOptions() {
         return dbHandler.getTeamOptions();
     }
+    public SeasonOptionModel[] getSeasonOptions() {
+        return dbHandler.getSeasonOptions();
+    }
 
     ///////////////////////////////////////////////////////////////utility//
 
@@ -72,7 +75,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     // TODO SANITIZE INPUT HERE OR IN DBHANDLER
     // get team by model
     public TeamModel getTeamByModel(String type, String name, String division) {
-        if ((Pattern.matches("[a-zA-Z]{1,20}", type) && (Pattern.matches("[a-zA-Z]{1,20}", name) && (Pattern.matches("[a-zA-Z]{1,20}", division)) {
+        if (Pattern.matches("[a-zA-Z]{1,20}", type) && Pattern.matches("[a-zA-Z]{1,20}", name) && Pattern.matches("[a-zA-Z]{1,20}", division)) {
             return dbHandler.getTeamByModel(type,name,division);
         }
         return null;
@@ -115,6 +118,12 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     public ArrayList<PlayerHasRankingIsInTeamFollowsModel> getRankingsBySeason(String season){
         return dbHandler.getRankingsBySeason(season);
     }
+
+    //hack fix later
+    public PlayerRankingModel[] getRankingsBySeasonALT(String season) {
+        return dbHandler.getRankingsBySeasonALT(season);
+    }
+
     public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(String teamName) {
         return dbHandler.coachedAllPlayersInGivenTeam(teamName);
     }

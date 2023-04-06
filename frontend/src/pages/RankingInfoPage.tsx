@@ -10,12 +10,13 @@ import { TableVirtuoso, TableComponents } from "react-virtuoso";
 import {
     Autocomplete,
     Box,
+    Button,
     Divider,
     Stack,
     TextField,
     Typography,
 } from "@mui/material";
-import { Season } from "../shared/types";
+import { Season, SeasonOption } from "../shared/types";
 import { createRoute } from "../shared/proxy";
 
 interface Data {
@@ -23,7 +24,7 @@ interface Data {
     playerID: string;
     playerName: string;
     teamName: string;
-    performancePoints: number;
+    // performancePoints: number;
 }
 
 interface ColumnData {
@@ -37,15 +38,15 @@ function createData(
     rank: number,
     playerID: string,
     playerName: string,
-    teamName: string,
-    performancePoints: number
+    teamName: string
+    // performancePoints: number
 ): Data {
     return {
         rank,
         playerID,
         playerName,
         teamName,
-        performancePoints,
+        // performancePoints,
     };
 }
 
@@ -70,11 +71,11 @@ const columns: ColumnData[] = [
         label: "Team",
         dataKey: "teamName",
     },
-    {
-        width: 60,
-        label: "Performance Points",
-        dataKey: "performancePoints",
-    },
+    // {
+    //     width: 60,
+    //     label: "Performance Points",
+    //     dataKey: "performancePoints",
+    // },
 ];
 
 const rows: Data[] = [];
@@ -131,10 +132,19 @@ function rowContent(_index: number, row: Data) {
     );
 }
 
+type RankingData = {
+    playerID: string;
+    name: string;
+    rankNumber: Number;
+    teamName: string;
+};
+
 export default function RankingInfoPage() {
     const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
 
-    const [options, setOptions] = useState<Season[]>([]);
+    const [options, setOptions] = useState<SeasonOption[]>([]);
+
+    const [rankingData, setRankingData] = useState<RankingData[] | null>(null);
 
     const fetchOptions = async () => {
         // todo error handling
@@ -142,7 +152,7 @@ export default function RankingInfoPage() {
         // console.log(res.status);
         if (res.status === 200) {
             const data = await res.json();
-            // console.log(data);
+            console.log(data);
             setOptions(data);
         }
     };
@@ -151,14 +161,37 @@ export default function RankingInfoPage() {
         fetchOptions();
     }, []);
 
-    const handleSelectedChange = async (e: any, newValue: Season | null) => {
+    const handleSelectedChange = async (
+        e: any,
+        newValue: SeasonOption | null
+    ) => {
         // TODO run SELECT query for new value to pull most recent data
         setSelectedSeason(newValue);
+
+        try {
+            const res = await fetch(
+                createRoute(`rankings/${newValue?.season}`)
+            );
+
+            // status handling goes here
+
+            const data: RankingData[] = await res.json();
+
+            console.log(data);
+            setRankingData(data);
+        } catch (e) {}
     };
+
+    function logState() {
+        console.log("selected season:", selectedSeason);
+    }
 
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
+                <Button variant="contained" onClick={logState}>
+                    log
+                </Button>
                 <Stack direction="row" justifyContent="space-between">
                     <Box display="flex" alignItems="end">
                         <Typography variant="h6">SELECT A SEASON</Typography>
@@ -168,6 +201,10 @@ export default function RankingInfoPage() {
                         id="season-selection"
                         value={selectedSeason}
                         options={options}
+                        getOptionLabel={(option) => option.season}
+                        isOptionEqualToValue={(option, value) =>
+                            option.season === value.season
+                        }
                         onChange={handleSelectedChange}
                         sx={{ mt: 1, width: 300 }}
                         renderInput={(params) => (

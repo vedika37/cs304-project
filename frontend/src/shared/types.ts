@@ -74,6 +74,10 @@ export interface PlayerOption {
     name: string;
 }
 
+export interface SeasonOption {
+    season: string;
+}
+
 ////////////////////////////////////////////
 export type User = Player | Coach;
 

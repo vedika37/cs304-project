@@ -3,6 +3,7 @@ package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.model.CoachOptionModel;
 import ca.ubc.cs304.model.PlayerOptionModel;
+import ca.ubc.cs304.model.SeasonOptionModel;
 import ca.ubc.cs304.model.TeamOptionModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +29,6 @@ public class optionsController {
     @GetMapping("/teams")
     public TeamOptionModel[] getTeamOptions() { return controller.getTeamOptions();}
 
-//    TODO
-//    @GetMapping("/seasons")
+    @GetMapping("/seasons")
+    public SeasonOptionModel[] getSeasonOptions() { return controller.getSeasonOptions();}
 }
