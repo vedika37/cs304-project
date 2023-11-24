@@ -10,6 +10,7 @@ import ca.ubc.cs304.ui.TerminalTransactions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * This is the main controller class that will orchestrate everything.
@@ -47,8 +48,38 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     public TeamOptionModel[] getTeamOptions() {
         return dbHandler.getTeamOptions();
     }
+    public SeasonOptionModel[] getSeasonOptions() {
+        return dbHandler.getSeasonOptions();
+    }
 
     ///////////////////////////////////////////////////////////////utility//
+
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
+    // get coach by id
+    public CoachModel getCoachByCoachID(String coachID) {
+        if (Pattern.matches("[a-zA-Z0-9]{1,20}", coachID)) {
+            return dbHandler.getCoachByCoachID(coachID);
+        }
+        return null;
+    }
+
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
+    // get player by id
+    public PlayerHasRankingIsInTeamFollowsModel getPlayerByPlayerID(String playerID) {
+        if (Pattern.matches("[a-zA-Z0-9]{1,20}", playerID)) {
+            return dbHandler.getPlayerByPlayerID(playerID);
+        }
+        return null;
+    }
+
+    // TODO SANITIZE INPUT HERE OR IN DBHANDLER
+    // get team by model
+    public TeamModel getTeamByModel(String type, String name, String division) {
+        if (Pattern.matches("[a-zA-Z]{1,20}", type) && Pattern.matches("[a-zA-Z]{1,20}", name) && Pattern.matches("[a-zA-Z]{1,20}", division)) {
+            return dbHandler.getTeamByModel(type,name,division);
+        }
+        return null;
+    }
 
 
 
@@ -59,39 +90,40 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         return dbHandler.getCoachInfo();
     }
 
-    // get coach by id
-    public CoachModel getCoachByCoachID(String coachID) {
-        //System.out.println("controller call");
-        return dbHandler.getCoachByCoachID(coachID);
-    }
 
-    public SportsScheduleModel[] showAllSchedulesMadeByCoach(String coachID) {
-       return dbHandler.showAllSchedulesMadeByCoach(coachID);
+    public SportsScheduleModel[] getAllSchedulesMadeByCoach(String coachID) {
+       return dbHandler.getAllSchedulesMadeByCoach(coachID);
     }
 
     public PlayerHasRankingIsInTeamFollowsModel[] getPlayers(){
         return dbHandler.getPlayerInfo();
     }
 
-    public HashMap<String, Integer> showCountOfAllTeams() {
+    public ArrayList<PlayerCountTeamModel> showCountOfAllTeams() {
         return dbHandler.showCountOfAllTeams();
     }
 
-    public ArrayList<String> showHighPerformingTeams() {
-        return dbHandler.showHighPerformingTeams();
+    public ArrayList<String> getHighPerformingTeams() {
+        return dbHandler.getHighPerformingTeams();
     }
 
     public PlayerHasRankingIsInTeamFollowsModel showStarPlayer(String teamName) {
         return dbHandler.showStarPlayer(teamName);
     }
 
-    public TeamModel showBestPerformingTeam() {
-        return dbHandler.showBestPerformingTeam();
+    public TeamModel getBestPerformingTeam() {
+        return dbHandler.getBestPerformingTeam();
     }
 
-    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> rankBySeason(String season){
-        return dbHandler.rankBySeason(season);
+    public ArrayList<PlayerHasRankingIsInTeamFollowsModel> getRankingsBySeason(String season){
+        return dbHandler.getRankingsBySeason(season);
     }
+
+    //hack fix later
+    public PlayerRankingModel[] getRankingsBySeasonALT(String season) {
+        return dbHandler.getRankingsBySeasonALT(season);
+    }
+
     public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(String teamName) {
         return dbHandler.coachedAllPlayersInGivenTeam(teamName);
     }

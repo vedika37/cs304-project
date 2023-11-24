@@ -8,17 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-
 @RestController
 @CrossOrigin
 public class sportsScheduleController {
     @Autowired
     private Controller controller;
 
+    //this url is incorrect for what it does (NOT RESTful) but works for now
     @GetMapping("/sportsSchedule/{coachID}")
-    public SportsScheduleModel[] showAllSchedulesMadeByCoach(@PathVariable("coachID") String coachID) {
-        return controller.showAllSchedulesMadeByCoach(coachID);
+    public SportsScheduleModel[] getAllSchedulesMadeByCoach(@PathVariable("coachID") String coachID) {
+        return controller.getAllSchedulesMadeByCoach(coachID);
     }
 
 
