@@ -22,10 +22,10 @@ public class apiController {
 //        String teamName = "The Lions";
 //        return controller.showStarPlayer(teamName);
 //    }
-    // TODO check controller.show...
     @GetMapping("/get-star-players/{teamName}")
     public PlayerHasRankingIsInTeamFollowsModel getStarPlayer(@PathVariable("teamName") String teamName) {
 //        String teamName = "The Lions";
+        String str = teamName.replaceAll("%20", " ");
         return controller.showStarPlayer(teamName);
     }
 

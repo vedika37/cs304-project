@@ -1,5 +1,6 @@
 package ca.ubc.cs304.controller;
 
+import ca.ubc.cs304.model.CoachModel;
 import ca.ubc.cs304.model.PlayerHasRankingIsInTeamFollowsModel;
 import ca.ubc.cs304.model.TeamModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,16 @@ public class teamController {
 //        return controller.showBestPerformingTeam();
 //    }
 
+    //    // previously
+//    @GetMapping("/coaches/division/{teamName}")
+//    public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(@PathVariable("teamName") String teamName) {
+//        return controller.coachedAllPlayersInGivenTeam(teamName);
+//    }
+    // get all coaches taht have worked with team division
+    @GetMapping("/teams/{teamName}/coaches")
+    public ArrayList<CoachModel> coachedAllPlayersInGivenTeam(@PathVariable("teamName") String teamName) {
+        String str = teamName.replaceAll("%20", " ");
+        return controller.coachedAllPlayersInGivenTeam(teamName);
+    }
 
 }

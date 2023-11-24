@@ -565,26 +565,15 @@ public class DatabaseConnectionHandler {
         TeamModel result = null;
 
         try {
-//            alternative
-//            SELECT t.TYPE,TEAMNAME,t.DIVISION, AVG(Pe.performancePoints)
-//            FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe
-//            WHERE  P.teamName = T.name AND P.playerID = Pe.playerID
-//            GROUP BY t.TYPE, TEAMNAME, t.DIVISION
-//            HAVING avg(Pe.performancePoints) >= all (SELECT AVG(Pe.performancePoints)
-//                    FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe
-//                    WHERE  P.teamName = T.name AND P.playerID = Pe.playerID
-//                    GROUP BY teamName)
-//            System.out.println(givenTeamName);
             PreparedStatement ps = connection.prepareStatement("SELECT teamName, AVG(Pe.performancePoints)\n" +
                     "    FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe\n" +
-                    "    WHERE  P.teamName = T.name AND P.playerID = Pe.playerID\n" +
+                    "    WHERE  rownum = 1 AND P.teamName = T.name AND P.playerID = Pe.playerID\n" +
                     "    GROUP BY teamName\n" +
                     "    HAVING avg(Pe.performancePoints) >= all (SELECT AVG(Pe.performancePoints)\n" +
                     "    FROM   playerHasRankingIsInTeamFollows P, Team T, displaysPerformance Pe\n" +
                     "    WHERE  P.teamName = T.name AND P.playerID = Pe.playerID\n" +
                     "    GROUP BY teamName)");
-//            ps.setString(1, givenTeamName);
-//            ps.setString(2, givenTeamName);
+
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()) {

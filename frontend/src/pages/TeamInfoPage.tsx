@@ -110,7 +110,10 @@ const TeamInfoPage = () => {
 
     const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
     const [options, setOptions] = useState<Team[]>([]);
-    const [topPlayer, setTopPlayer] = useState<Player | null>(null);
+    //type
+    const [topPlayer, setTopPlayer] = useState<any>(null);
+    //fix typing
+    const [coaches, setCoaches] = useState<any[]>([]);
 
     const fetchOptions = async () => {
         // todo error handling
@@ -136,6 +139,27 @@ const TeamInfoPage = () => {
         // TODO run SELECT query for new value to pull most recent data
 
         setSelectedTeam(newValue);
+    };
+
+    const fetchTopPlayer = async () => {
+        // todo error handling
+        const res = await fetch(
+            createRoute(`api/get-star-players/${selectedTeam?.name}`)
+        );
+
+        const data = await res.json();
+        console.log(data);
+        setTopPlayer(data);
+    };
+
+    const fetchCoachesForTeam = async () => {
+        const res = await fetch(
+            createRoute(`teams/${selectedTeam?.name}/coaches`)
+        );
+
+        const data = await res.json();
+        console.log(data);
+        setCoaches(data);
     };
 
     return (
@@ -185,7 +209,18 @@ const TeamInfoPage = () => {
                 <Divider sx={{ mt: 2, mb: 1 }} />
                 {/*Team player Table*/}
                 <Grid>
-                    <Button variant="outlined">Get Top Player</Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            if (selectedTeam) {
+                                fetchTopPlayer();
+                            } else {
+                                alert("Please select a team first");
+                            }
+                        }}
+                    >
+                        Get Top Player
+                    </Button>
                 </Grid>
                 <Divider sx={{ mt: 1, mb: 1 }} />
                 {/*  */}
@@ -207,6 +242,30 @@ const TeamInfoPage = () => {
                     </Grid>
                 )}
                 {/*  */}
+                <Divider sx={{ mt: 2, mb: 1 }} />
+                <Grid>
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            if (selectedTeam) {
+                                console.log("coaches fetch");
+                                fetchCoachesForTeam();
+                            } else {
+                                alert("Please select a team first");
+                            }
+                        }}
+                    >
+                        Get Coaches that have worked with team
+                    </Button>
+                </Grid>
+                <Divider sx={{ mt: 1, mb: 1 }} />
+                {coaches.map((v, i) => (
+                    <div key={i}>
+                        ID: {v.coachID}
+                        <br />
+                        NAME: {v.name}
+                    </div>
+                ))}
             </Box>
         </div>
     );
